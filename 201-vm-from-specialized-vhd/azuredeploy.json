@@ -63,7 +63,7 @@
       "metadata": {
         "description": "NicName"
       }
-    } ,
+    },
     "publicIPAddressName": {
       "type": "string",
       "defaultValue": "specializedVMPublicIP",
