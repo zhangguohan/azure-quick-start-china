@@ -61,14 +61,14 @@
       "type": "string",
       "defaultValue": "specializedVMNic",
       "metadata": {
-        "description": "NicName"
+        "description": "同一资源组内要保证nicname不冲突"
       }
     },
     "publicIPAddressName": {
       "type": "string",
       "defaultValue": "specializedVMPublicIP",
       "metadata": {
-        "description": "publicIPAddressName"
+        "description": "同一资源组内要保证AddressName不冲突"
       }
     } 
   },
