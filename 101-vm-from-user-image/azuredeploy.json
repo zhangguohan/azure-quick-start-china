@@ -14,6 +14,12 @@
         "description": "Uri of the your user image"
       }
     },
+    "vmName": {
+      "type": "string",
+      "metadata": {
+        "description": "Name of your new VM"
+      }
+    },
     "dnsLabelPrefix": {
       "type": "string",
       "metadata": {
@@ -52,7 +58,7 @@
   "variables": {
     "location": "[resourceGroup().location]",
     "publicIPAddressName": "userImagePublicIP",
-    "vmName": "userImageVM",
+    //"vmName": "userImageVM",
     "virtualNetworkName": "userImageVNET",
     "nicName": "userImageVMNic",
     "addressPrefix": "10.0.0.0/16",
@@ -61,7 +67,7 @@
     "publicIPAddressType": "Dynamic",
     "vnetID": "[resourceId('Microsoft.Network/virtualNetworks',variables('virtualNetworkName'))]",
     "subnet1Ref": "[concat(variables('vnetID'),'/subnets/',variables('subnet1Name'))]",
-    "osDiskVhdName": "[concat('http://',parameters('userImageStorageAccountName'),'.blob.core.chinacloudapi.cn/vhds/',variables('vmName'),'osDisk.vhd')]",
+    "osDiskVhdName": "[concat('http://',parameters('userImageStorageAccountName'),'.blob.core.chinacloudapi.cn/vhds/',parameters('vmName'),'osDisk.vhd')]",
     "apiVersion": "2015-06-15"
   },
   "resources": [
@@ -127,7 +133,7 @@
     {
       "apiVersion": "[variables('apiVersion')]",
       "type": "Microsoft.Compute/virtualMachines",
-      "name": "[variables('vmName')]",
+      "name": "[parameters('vmName')]",
       "location": "[variables('location')]",
       "dependsOn": [
         "[concat('Microsoft.Network/networkInterfaces/', variables('nicName'))]"
@@ -137,13 +143,13 @@
           "vmSize": "[parameters('vmSize')]"
         },
         "osProfile": {
-          "computerName": "[variables('vmName')]",
+          "computerName": "[parameters('vmName')]",
           "adminUsername": "[parameters('adminUsername')]",
           "adminPassword": "[parameters('adminPassword')]"
         },
         "storageProfile": {
           "osDisk": {
-            "name": "[concat(variables('vmName'),'-osDisk')]",
+            "name": "[concat(parameters('vmName'),'-osDisk')]",
             "osType": "[parameters('osType')]",
             "caching": "ReadWrite",
             "createOption": "FromImage",
@@ -161,13 +167,13 @@
               "id": "[resourceId('Microsoft.Network/networkInterfaces',variables('nicName'))]"
             }
           ]
-        },
-        "diagnosticsProfile": {
-          "bootDiagnostics": {
-             "enabled": "true",
-             "storageUri": "[concat('http://',parameters('userImageStorageAccountName'),'.blob.core.chinacloudapi.cn')]"
-          }
         }
+        //"diagnosticsProfile": {
+        //  "bootDiagnostics": {
+        //     "enabled": "true",
+        //     "storageUri": "[concat('http://',parameters('userImageStorageAccountName'),'.blob.core.chinacloudapi.cn')]"
+        //  }
+        // }
       }
     }
   ]
