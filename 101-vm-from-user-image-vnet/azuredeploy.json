@@ -93,7 +93,7 @@
     "nicName": "[concat(parameters('customVmName'),'Nic')]",
     "publicIPAddressType": "Dynamic",
     "apiVersion": "2015-06-15",
-    "templatelink": "[concat('https://raw.githubusercontent.com/dafoyiming/azure-quick-start-vnet/meat/101-vm-from-user-image-vnet/',parameters('newOrExistingVnet'),'vnet.json')]"
+    "templatelink": "[concat('https://raw.githubusercontent.com/dafoyiming/azure-quick-start-china/meat/101-vm-from-user-image-vnet/',parameters('newOrExistingVnet'),'vnet.json')]"
   },
   "resources": [
     {
