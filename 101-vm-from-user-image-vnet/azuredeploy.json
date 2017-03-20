@@ -104,6 +104,20 @@
   },
   "resources": [
     {
+            "name": "[parameters('AvailiabilitySet')]",
+            "type": "Microsoft.Compute/availabilitySets",
+            "location": "[resourceGroup().location]",
+            "apiVersion": "2015-06-15",
+            "dependsOn": [ ],
+            "tags": {
+            "displayName": "AvailiabilitySet"
+            },
+            "properties": {
+            "platformUpdateDomainCount": 5,
+            "platformFaultDomainCount": 2
+            }
+        },
+    {
             "apiVersion": "2015-01-01",
             "name": "vnet-template",
             "type": "Microsoft.Resources/deployments",
