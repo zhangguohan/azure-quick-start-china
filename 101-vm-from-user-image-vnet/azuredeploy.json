@@ -60,7 +60,7 @@
         "description": "This is the size of your VM"
       }
     },
-    "AvailiabilitySet": {
+    "existingAvailiabilitySet": {
       "type": "string",
       "metadata": {
         "description": "This is the AvailiabilitySet of your VM"
@@ -103,13 +103,13 @@
   },
   "resources": [
     {
-            "name": "[parameters('AvailiabilitySet')]",
+            "name": "[parameters('existingAvailiabilitySet')]",
             "type": "Microsoft.Compute/availabilitySets",
             "location": "[resourceGroup().location]",
             "apiVersion": "2015-06-15",
             "dependsOn": [ ],
             "tags": {
-            "displayName": "AvailiabilitySet"
+            "displayName": "existingAvailiabilitySet"
             }
            // "properties": {
            // "platformUpdateDomainCount": 5,
@@ -184,7 +184,7 @@
       "location": "[resourceGroup().location]",
       "dependsOn": [
         "[concat('Microsoft.Network/networkInterfaces/', variables('nicName'))]",
-        "[concat('Microsoft.Compute/availabilitySets/', parameters('AvailiabilitySet'))]"  
+        "[concat('Microsoft.Compute/availabilitySets/', parameters('existingAvailiabilitySet'))]"  
       ],
       "properties": {
         "hardwareProfile": {
@@ -217,7 +217,7 @@
           ]
         },
         "availabilitySet": { 
-              "id": "[concat(resourceId(parameters('existingVnetResourceGroupName'), 'Mircosoft.Compute/availabilitySets/', parameters('AvailiabilitySet')))]"
+              "id": "[concat(resourceId(parameters('existingVnetResourceGroupName'), 'Mircosoft.Compute/availabilitySets/', parameters('existingAvailiabilitySet')))]"
         }
         //"diagnosticsProfile": {
         //  "bootDiagnostics": {
