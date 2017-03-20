@@ -62,7 +62,6 @@
     },
     "AvailiabilitySet": {
       "type": "string",
-      "minLength": 1,
       "metadata": {
         "description": "This is the AvailiabilitySet of your VM"
       }
@@ -218,7 +217,7 @@
           ]
         },
         "availabilitySet": { 
-              "id": "[resourceId('Mircosoft.Compute/availabilitySets',parameters('AvailiabilitySet'))]"
+              "id": "[concat(resourceId(parameters('existingVnetResourceGroupName'), 'Mircosoft.Compute/availabilitySets/', parameters('AvailiabilitySet')))]"
         }
         //"diagnosticsProfile": {
         //  "bootDiagnostics": {
