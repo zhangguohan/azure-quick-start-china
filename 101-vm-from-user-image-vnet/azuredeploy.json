@@ -111,11 +111,11 @@
             "dependsOn": [ ],
             "tags": {
             "displayName": "AvailiabilitySet"
-            },
-            "properties": {
-            "platformUpdateDomainCount": 5,
-            "platformFaultDomainCount": 2
             }
+           // "properties": {
+           // "platformUpdateDomainCount": 5,
+           // "platformFaultDomainCount": 2
+           // }
         },
     {
             "apiVersion": "2015-01-01",
