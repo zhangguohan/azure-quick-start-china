@@ -7,3 +7,6 @@
     <img src="http://armviz.io/visualizebutton.png"/>
 </a>
 
+#1 可以新建或者指定已有虚拟网络和虚拟机子网
+#2 必须指定一个可用性集
+#3 虚拟机会创建在Image所在的存储账号
