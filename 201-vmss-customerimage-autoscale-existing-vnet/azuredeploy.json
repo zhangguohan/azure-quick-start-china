@@ -196,11 +196,7 @@
       "location": "[resourceGroup().location]",
       "apiVersion": "[variables('computeApiVersion')]",
       "dependsOn": [
-        "[concat('Microsoft.Storage/storageAccounts/', variables('vmssstorageAccounts')[0], variables('vmssnewAccountSuffix'))]",
-        "[concat('Microsoft.Storage/storageAccounts/', variables('vmssstorageAccounts')[1], variables('vmssnewAccountSuffix'))]",
-        "[concat('Microsoft.Storage/storageAccounts/', variables('vmssstorageAccounts')[2], variables('vmssnewAccountSuffix'))]",
-        "[concat('Microsoft.Storage/storageAccounts/', variables('vmssstorageAccounts')[3], variables('vmssnewAccountSuffix'))]",
-        "[concat('Microsoft.Storage/storageAccounts/', variables('vmssstorageAccounts')[4], variables('vmssnewAccountSuffix'))]",
+        "storageLoop",
         "[concat('Microsoft.Network/loadBalancers/', variables('loadBalancerName'))]"
         //"[concat('Microsoft.Network/virtualNetworks/', variables('virtualNetworkName'))]"
       ],
@@ -217,13 +213,6 @@
         "virtualMachineProfile": {
           "storageProfile": {
             "osDisk": {
-              "vhdContainers": [
-                "[concat(reference(concat('Microsoft.Storage/storageAccounts/', variables('vmssstorageAccounts')[0], variables('vmssnewAccountSuffix')), '2015-06-15').primaryEndpoints.blob, 'vhds')]",
-                "[concat(reference(concat('Microsoft.Storage/storageAccounts/', variables('vmssstorageAccounts')[1], variables('vmssnewAccountSuffix')), '2015-06-15').primaryEndpoints.blob, 'vhds')]",
-                "[concat(reference(concat('Microsoft.Storage/storageAccounts/', variables('vmssstorageAccounts')[2], variables('vmssnewAccountSuffix')), '2015-06-15').primaryEndpoints.blob, 'vhds')]",
-                "[concat(reference(concat('Microsoft.Storage/storageAccounts/', variables('vmssstorageAccounts')[3], variables('vmssnewAccountSuffix')), '2015-06-15').primaryEndpoints.blob, 'vhds')]",
-                "[concat(reference(concat('Microsoft.Storage/storageAccounts/', variables('vmssstorageAccounts')[4], variables('vmssnewAccountSuffix')), '2015-06-15').primaryEndpoints.blob, 'vhds')]"
-              ],
               "name": "vmssosdisk",
               "caching": "ReadOnly",
               "createOption": "FromImage",
