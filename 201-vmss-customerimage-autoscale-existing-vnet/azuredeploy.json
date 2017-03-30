@@ -61,16 +61,7 @@
       "[concat(uniqueString(concat(variables('vmssnewAccountSuffix'), '4')))]"
       ],
       "vmsssaCount": "[length(variables('vmssstorageAccounts'))]",
-    
-    
-
-
-  
-    //"addressPrefix": "10.0.0.0/16",
-    //"subnetPrefix": "10.0.0.0/24",
-    //"virtualNetworkName": "[concat(variables('namingInfix'), 'vnet')]",
     "publicIPAddressName": "[concat(variables('vmssuniqueName'), 'pip')]",
-    //"subnetName": "[concat(variables('namingInfix'), 'subnet')]",
     "loadBalancerName": "[concat(variables('vmssuniqueName'), 'lb')]",
     "publicIPAddressID": "[resourceId('Microsoft.Network/publicIPAddresses',variables('publicIPAddressName'))]",
     "lbID": "[resourceId('Microsoft.Network/loadBalancers',variables('loadBalancerName'))]",
@@ -91,40 +82,12 @@
     "wadcfgxstart": "[concat(variables('wadlogs'),variables('wadperfcounters1'),variables('wadperfcounters2'),'<Metrics resourceId=\"')]",
     "wadmetricsresourceid": "[concat('/subscriptions/',subscription().subscriptionId,'/resourceGroups/',resourceGroup().name ,'/providers/','Microsoft.Compute/virtualMachineScaleSets/',variables('vmssuniqueName'))]",
     "wadcfgxend": "[concat('\"><MetricAggregation scheduledTransferPeriod=\"PT1H\"/><MetricAggregation scheduledTransferPeriod=\"PT1M\"/></Metrics></DiagnosticMonitorConfiguration></WadCfg>')]",
-    //"osType": {
-    //  "publisher": "Canonical",
-    //  "offer": "UbuntuServer",
-    //  "sku": "[parameters('ubuntuOSVersion')]",
-    //  "version": "latest"
-    //},
-    //"imageReference": "[variables('osType')]",
     "computeApiVersion": "2016-03-30",
     "networkApiVersion": "2016-03-30",
     "storageApiVersion": "2015-06-15",
     "insightsApiVersion": "2015-04-01"
   },
   "resources": [
-    //{
-     // "type": "Microsoft.Network/virtualNetworks",
-     // "name": "[variables('virtualNetworkName')]",
-     // "location": "[resourceGroup().location]",
-     // "apiVersion": "[variables('networkApiVersion')]",
-     // "properties": {
-     //   "addressSpace": {
-     //     "addressPrefixes": [
-     //       "[variables('addressPrefix')]"
-     //     ]
-     //   },
-     //   "subnets": [
-     //     {
-     //       "name": "[variables('subnetName')]",
-     //       "properties": {
-     //         "addressPrefix": "[variables('subnetPrefix')]"
-     //       }
-     //     }
-     //   ]
-     // }
-    //},
     {
       "type": "Microsoft.Storage/storageAccounts",
       "name": "[concat(variables('vmssstorageAccounts')[copyIndex()], variables('vmssnewAccountSuffix'))]",
@@ -198,7 +161,6 @@
       "dependsOn": [
         "storageLoop",
         "[concat('Microsoft.Network/loadBalancers/', variables('loadBalancerName'))]"
-        //"[concat('Microsoft.Network/virtualNetworks/', variables('virtualNetworkName'))]"
       ],
       "sku": {
         "name": "[parameters('vmSku')]",
