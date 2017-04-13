@@ -69,7 +69,7 @@
     "bePoolName": "[concat(variables('vmssuniqueName'), 'bepool')]",
     "natStartPort": 50000,
     "natEndPort": 50119,
-    "natBackendPort": 22,
+    "natBackendPort": 3389,
     "nicName": "[concat(variables('vmssuniqueName'), 'nic')]",
     "ipConfigName": "[concat(variables('vmssuniqueName'), 'ipconfig')]",
     "frontEndIPConfigID": "[concat(variables('lbID'),'/frontendIPConfigurations/loadBalancerFrontEnd')]",
