@@ -198,9 +198,7 @@
               "caching": "ReadOnly",
               "createOption": "FromImage"
             },
-              "imageReference": {
-                "uri": "[parameters('sourceImageVhdUri')]"
-              }
+              "imageReference": "[parameters('sourceImageVhdUri')]"   
           },
           "osProfile": {
             "computerNamePrefix": "[variables('namingInfix')]",
