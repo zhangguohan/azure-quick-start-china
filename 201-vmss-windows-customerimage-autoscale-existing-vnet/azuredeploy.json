@@ -198,7 +198,7 @@
               "caching": "ReadOnly",
               "createOption": "FromImage"
             },
-              "image": {
+              "imageReference": {
                 "uri": "[parameters('sourceImageVhdUri')]"
               }
           },
