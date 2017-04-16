@@ -75,7 +75,7 @@
     "nicName": "[concat(variables('namingInfix'), 'nic')]",
     "ipConfigName": "[concat(variables('namingInfix'), 'ipconfig')]",
     "frontEndIPConfigID": "[concat(variables('lbID'),'/frontendIPConfigurations/loadBalancerFrontEnd')]",
-     "diagnosticsStorageAccountName": "[concat(uniqueString(concat(resourceGroup().id, variables('newStorageAccountSuffix'))), variables('newStorageAccountSuffix'))]",
+    "diagnosticsStorageAccountName": "[concat(uniqueString(concat(resourceGroup().id, variables('newStorageAccountSuffix'))), variables('newStorageAccountSuffix'))]",
     "diagnosticsStorageAccountResourceGroup": "[resourceGroup().name]",
     "accountid": "[concat('/subscriptions/',subscription().subscriptionId,'/resourceGroups/',variables('diagnosticsStorageAccountResourceGroup'),'/providers/','Microsoft.Storage/storageAccounts/', variables('diagnosticsStorageAccountName'))]",
     "wadlogs": "<WadCfg><DiagnosticMonitorConfiguration>",
@@ -196,9 +196,11 @@
               ],
               "name": "[variables('osDiskName')]",
               "caching": "ReadOnly",
-              "createOption": "FromImage"
-            },
-              "imageReference": "[parameters('sourceImageVhdUri')]"   
+              "createOption": "FromImage",
+              "image": {
+                "uri": "[parameters('sourceImageVhdUri')]"
+              }
+            }     
           },
           "osProfile": {
             "computerNamePrefix": "[variables('namingInfix')]",
