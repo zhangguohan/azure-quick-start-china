@@ -71,9 +71,15 @@
     "bePoolName": "[concat(variables('namingInfix'), 'bepool')]",
     "natStartPort": 50000,
     "natEndPort": 50119,
+<<<<<<< HEAD
     "natBackendPort": 22,
     "nicName": "[concat(variables('namingInfix'), 'nic')]",
     "ipConfigName": "[concat(variables('namingInfix'), 'ipconfig')]",
+=======
+    "natBackendPort": 3389,
+    "nicName": "[concat(variables('vmssuniqueName'), 'nic')]",
+    "ipConfigName": "[concat(variables('vmssuniqueName'), 'ipconfig')]",
+>>>>>>> origin/meat
     "frontEndIPConfigID": "[concat(variables('lbID'),'/frontendIPConfigurations/loadBalancerFrontEnd')]",
      "diagnosticsStorageAccountName": "[concat(uniqueString(concat(resourceGroup().id, variables('newStorageAccountSuffix'))), variables('newStorageAccountSuffix'))]",
     "diagnosticsStorageAccountResourceGroup": "[resourceGroup().name]",
