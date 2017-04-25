@@ -32,11 +32,6 @@
       }
     }
   },
-  "plan": {
-      "publisher": "paloaltonetworks",
-      "name": "bundle1",
-      "product": "vmseries1"
-  },
   "variables": {
     "diagStorageAccountName": "[concat(uniquestring(resourceGroup().id), 'specvm')]",
     "api-version": "2015-06-15",
@@ -117,6 +112,11 @@
     "dependsOn": [
       "[concat('Microsoft.Network/networkInterfaces/', variables('nicName'))]"
     ],
+    "plan": {
+      "publisher": "paloaltonetworks",
+      "name": "bundle1",
+      "product": "vmseries1"
+   },
     "properties": {
       "hardwareProfile": {
         "vmSize": "[parameters('vmSize')]"
