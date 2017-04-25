@@ -34,7 +34,7 @@
   },
   "variables": {
     "diagStorageAccountName": "[concat(uniquestring(resourceGroup().id), 'specvm')]",
-    "api-version": "2015-06-15",
+    "api-version": "2016-03-30",
     "addressPrefix": "10.0.0.0/16",
     "subnetName": "Subnet",
     "subnetPrefix": "10.0.0.0/24",
