@@ -62,7 +62,7 @@
     },
     "vmSize": {
       "type": "string",
-      "defaultValue": "Standard_A0",
+      "defaultValue": "Standard_A3",
       "metadata": {
         "description": "VM Size"
       }
@@ -90,11 +90,7 @@
     "subnet2Name": "subnet-2",
     "subnet1Prefix": "10.0.0.0/24",
     "subnet2Prefix": "10.0.1.0/24",
-    "nicName": "[concat(variables('namingInfix'), 'nic')]",
-    "dataDisk1VhdName": "[concat('http://',parameters('newStorageAccountName'),'.blob.core.chinacloudapi.cn/',variables('vmStorageAccountContainerName'),'/',variables('namingInfix'),'dataDisk1.vhd')]",
-    "dataDisk2VhdName": "[concat('http://',parameters('newStorageAccountName'),'.blob.core.chinacloudapi.cn/',variables('vmStorageAccountContainerName'),'/',variables('namingInfix'),'dataDisk2.vhd')]",
-    "dataDisk3VhdName": "[concat('http://',parameters('newStorageAccountName'),'.blob.core.chinacloudapi.cn/',variables('vmStorageAccountContainerName'),'/',variables('namingInfix'),'dataDisk3.vhd')]",
-    "dataDisk4VhdName": "[concat('http://',parameters('newStorageAccountName'),'.blob.core.chinacloudapi.cn/',variables('vmStorageAccountContainerName'),'/',variables('namingInfix'),'dataDisk4.vhd')]"
+    "nicName": "[concat(variables('namingInfix'), 'nic')]"
   },
 
   "resources": [
