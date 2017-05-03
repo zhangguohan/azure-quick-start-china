@@ -234,7 +234,7 @@
               "diskSizeGB": "[parameters('sizeOfEachDataDiskInGB')]",
               "lun": 0,
               "vhd": { 
-                "uri": "[concat('http://',parameters('newStorageAccountName'),'.blob.core.chinacloudapi.cn/vhds/','datadisk', concat(variables('vmName'),copyIndex()), '.vhd')]" 
+                "uri": "[concat('http://',parameters('newStorageAccountName'),'.blob.core.chinacloudapi.cn/vhds/','datadisk0', concat(variables('vmName'),copyIndex()), '.vhd')]" 
 				      }, 
               "createOption": "Empty"
             },
@@ -243,7 +243,7 @@
               "diskSizeGB": "[parameters('sizeOfEachDataDiskInGB')]",
               "lun": 1,
                "vhd": { 
-                "uri": "[concat('http://',parameters('newStorageAccountName'),'.blob.core.chinacloudapi.cn/vhds/','datadisk', concat(variables('vmName'),copyIndex()), '.vhd')]" 
+                "uri": "[concat('http://',parameters('newStorageAccountName'),'.blob.core.chinacloudapi.cn/vhds/','datadisk1', concat(variables('vmName'),copyIndex()), '.vhd')]" 
 				      }, 
               "createOption": "Empty"
             },
@@ -252,7 +252,7 @@
               "diskSizeGB": "[parameters('sizeOfEachDataDiskInGB')]",
               "lun": 2,
               "vhd": { 
-                "uri": "[concat('http://',parameters('newStorageAccountName'),'.blob.core.chinacloudapi.cn/vhds/','datadisk', concat(variables('vmName'),copyIndex()), '.vhd')]" 
+                "uri": "[concat('http://',parameters('newStorageAccountName'),'.blob.core.chinacloudapi.cn/vhds/','datadisk2', concat(variables('vmName'),copyIndex()), '.vhd')]" 
 				      }, 
               "createOption": "Empty"
             },
@@ -261,7 +261,7 @@
               "diskSizeGB": "[parameters('sizeOfEachDataDiskInGB')]",
               "lun": 3,
                "vhd": { 
-                "uri": "[concat('http://',parameters('newStorageAccountName'),'.blob.core.chinacloudapi.cn/vhds/','datadisk', concat(variables('vmName'),copyIndex()), '.vhd')]" 
+                "uri": "[concat('http://',parameters('newStorageAccountName'),'.blob.core.chinacloudapi.cn/vhds/','datadisk3', concat(variables('vmName'),copyIndex()), '.vhd')]" 
 				      }, 
               "createOption": "Empty"
             }
