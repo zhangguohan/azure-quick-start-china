@@ -82,7 +82,7 @@
     //"vmExtensionName": "LinuxChefExtension",
     "vmName": "[parameters('vmDnsName')]",
     "storageAccountType": "Standard_LRS",
-    "publicIPAddressName": "[concat('PublicIP',uniqueString(resourceGroup().id))]",
+    "publicIPAddressName": "PublicIP",
     "publicIPAddressType": "Dynamic",
     "vmStorageAccountContainerName": "vhds",
     "addressPrefix": "10.0.0.0/16",
