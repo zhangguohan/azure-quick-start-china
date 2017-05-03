@@ -125,10 +125,10 @@
         "count": "[parameters('numberOfInstances')]"
       },
       "properties": {
-        "publicIPAllocationMethod": "[variables('publicIPAddressType')]",
-        "dnsSettings": {
-          "domainNameLabel": "[parameters('vmDnsName')]"
-        }
+        "publicIPAllocationMethod": "[variables('publicIPAddressType')]"
+        //"dnsSettings": {
+        //  "domainNameLabel": "[parameters('vmDnsName')]"
+        // }
       }
     },
     {
