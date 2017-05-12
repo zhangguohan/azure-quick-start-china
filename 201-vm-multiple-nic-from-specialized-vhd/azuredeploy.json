@@ -1,0 +1,193 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "osDiskVhdUri": {
+      "type": "string",
+      "metadata": {
+        "description": "Uri of the existing VHD"
+      }
+    },
+    "osType": {
+      "type": "string",
+      "allowedValues": [
+        "Windows",
+        "Linux"
+      ],
+      "metadata": {
+        "description": "Type of OS on the existing vhd"
+      }
+    },
+    "vmSize": {
+      "type": "string",
+      "defaultValue": "Standard_D2",
+      "metadata": {
+        "description":"vm size：Standard_A0/Standard_A1/Standard_A2/Standard_A3/Standard_A5/Standard_A4/Standard_A6/Standard_A7Basic_A0/Basic_A1/Basic_A2/Basic_A3/Basic_A4Standard_D1_v2/Standard_D2_v2Standard_D3_v2/Standard_D4_v2/Standard_D5_v2/Standard_D11_v2/Standard_D12_v2/Standard_D13_v2/Standard_D14_v2/Standard_D15_v2/Standard_F1/Standard_F2/Standard_F4/Standard_F8/Standard_F16/Standard_DS1/Standard_DS2/Standard_DS3/Standard_DS4/Standard_DS11/Standard_DS12/Standard_DS13/Standard_DS14/Standard_D1/Standard_D2/Standard_D3/Standard_D4/Standard_D11/Standard_D12/Standard_D13/Standard_D14"
+      }
+    },
+    "vmName": {
+      "type": "string",
+      "metadata": {
+        "description": "Name of the VM"
+      }
+    }
+  },
+  "variables": {
+    "api-version": "2015-06-15",
+    "nic1Name": "nic1",
+    "nic2Name": "nic2",
+
+    "vnetName": "vnet",
+    "vnetId": "[resourceId('Microsoft.Network/virtualNetworks', variables('vnetName'))]",
+    "addressPrefix": "10.0.0.0/16",
+
+    "subnet1Name": "subnet1",
+    "subnet1Id": "[concat(variables('vnetId'), '/subnets/', variables('subnet1Name'))]",
+    "subnet1Prefix": "10.0.1.0/24",
+    "subnet1PrivateAddress": "10.0.1.5",
+
+    "subnet2Name": "subnet2",
+    "subnet2Id": "[concat(variables('vnetId'), '/subnets/', variables('subnet2Name'))]",
+    "subnet2Prefix": "10.0.2.0/24",
+    "subnet2PrivateAddress": "10.0.2.5",
+
+    "publicIPAddressName": "[concat(uniquestring(resourceGroup().id), 'PublicIp')]",
+    "publicIPAddressType": "Dynamic",
+    "publicIPAddressId": "[resourceId('Microsoft.Network/publicIPAddresses', variables('publicIPAddressName'))]"
+
+  },
+  "resources": [
+    {
+      "apiVersion": "[variables('api-version')]",
+      "type": "Microsoft.Network/virtualNetworks",
+      "name": "[variables('vnetName')]",
+      "location": "[resourceGroup().location]",
+      "properties": {
+        "addressSpace": {
+          "addressPrefixes": [
+            "[variables('addressPrefix')]"
+          ]
+        },
+        "subnets": [
+          {
+            "name": "[variables('subnet1Name')]",
+            "properties": {
+              "addressPrefix": "[variables('subnet1Prefix')]"
+            }
+          },
+          {
+            "name": "[variables('subnet2Name')]",
+            "properties": {
+              "addressPrefix": "[variables('subnet2Prefix')]"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "type": "Microsoft.Network/networkInterfaces",
+      "apiVersion": "[variables('api-version')]",
+      "dependsOn": [
+        "[variables('vnetId')]",
+        "[variables('publicIPAddressId')]"
+      ],
+      "location": "[resourceGroup().location]",
+      "name": "[variables('nic1Name')]",
+      "properties": {
+        "ipConfigurations": [
+          {
+            "name": "ipconfig1",
+            "properties": {
+              "privateIPAddress": "[variables('subnet1PrivateAddress')]",
+              "privateIPAllocationMethod": "Static",
+              "PublicIpAddress": {
+                "Id": "[variables('publicIPAddressId')]"
+              },
+              "subnet": {
+                "id": "[variables('subnet1Id')]"
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "type": "Microsoft.Network/networkInterfaces",
+      "apiVersion": "[variables('api-version')]",
+      "dependsOn": [
+        "[variables('vnetId')]"
+      ],
+      "location": "[resourceGroup().location]",
+      "name": "[variables('nic2Name')]",
+      "properties": {
+        "ipConfigurations": [
+          {
+            "name": "ipconfig2",
+            "properties": {
+              "privateIPAddress": "[variables('subnet2PrivateAddress')]",
+              "privateIPAllocationMethod": "Static",
+              "subnet": {
+                "id": "[variables('subnet2Id')]"
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "type": "Microsoft.Network/publicIPAddresses",
+      "apiVersion": "[variables('api-version')]",
+      "location": "[resourceGroup().location]",
+      "name": "[variables('publicIPAddressName')]",
+      "properties": {
+        "dnsSettings": {
+          "domainNameLabel": "[parameters('vmName')]"
+        },
+        "idleTimeoutInMinutes": 30,
+        "publicIPAllocationMethod": "[variables('publicIPAddressType')]"
+      }
+    },
+    {
+      "apiVersion": "[variables('api-version')]",
+      "type": "Microsoft.Compute/virtualMachines",
+      "name": "[parameters('vmName')]",
+      "location": "[resourceGroup().location]",
+      "dependsOn": [
+        "[concat('Microsoft.Network/networkInterfaces/', variables('nic1Name'))]",
+        "[concat('Microsoft.Network/networkInterfaces/', variables('nic2Name'))]"
+      ],
+      "properties": {
+        "hardwareProfile": {
+          "vmSize": "[parameters('vmSize')]"
+        },
+        "storageProfile": {
+          "osDisk": {
+            "name": "[concat(parameters('vmName'),'-osDisk')]",
+            "osType": "[parameters('osType')]",
+            "caching": "ReadWrite",
+            "vhd": {
+              "uri": "[parameters('osDiskVhdUri')]"
+            },
+            "createOption": "Attach"
+          }
+        },
+      "networkProfile": {
+          "networkInterfaces": [
+            {
+              "id": "[resourceId('Microsoft.Network/networkInterfaces', variables('nic1Name'))]",
+              "properties": {
+                "primary": true
+              }
+            },
+            {
+              "id": "[resourceId('Microsoft.Network/networkInterfaces', variables('nic2Name'))]",
+              "properties": {
+                "primary": false
+              }
+            }
+          ]
+        }
+      }
+    }
+  ]
+}
