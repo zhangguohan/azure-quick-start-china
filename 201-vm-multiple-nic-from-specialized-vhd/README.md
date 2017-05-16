@@ -5,7 +5,7 @@
 </a>
 
 - 为虚拟机创建两个网卡nic1和nic2
-- 创建一个虚拟网络vnet
-- 在vnet中创建两个子网subnet1和subnet2
-- nic1 为主网卡连接subnet1；nic2为辅网卡连接subnet2
+- 创建一个虚拟网络vnet(10.0.0.0/16)
+- 在vnet中创建两个子网subnet1(10.0.1.0/24)和subnet2(10.0.2.0/24)
+- nic1为主网卡连接subnet1；nic2为辅网卡连接subnet2
 - 使用一个已有的VHD作为操作系统磁盘创建虚拟机
