@@ -1,10 +1,8 @@
-### Autoscale a Linux VM Scale Set ###
+### Autoscale a Windows VM Scale Set ###
 
 支持Windows虚拟机已有镜像部署VMSS，镜像需要一般化
 需要指定某个已经存在的VNET及SubNet
 
-> Linux 在操作系统内部执行
-sudo waagent-deprovision
 
 > Windows 在操作系统内部执行
 sysprep.exe
