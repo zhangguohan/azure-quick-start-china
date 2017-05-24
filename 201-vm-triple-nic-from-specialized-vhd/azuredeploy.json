@@ -53,7 +53,7 @@
     "subnet2PrivateAddress": "10.0.2.5",
 
     "subnet3Name": "subnet3",
-    "subnet3Id": "[concat(variables('vnetId'), '/subnets/', variables('subnet2Name'))]",
+    "subnet3Id": "[concat(variables('vnetId'), '/subnets/', variables('subnet3Name'))]",
     "subnet3Prefix": "10.0.3.0/24",
     "subnet3PrivateAddress": "10.0.3.5",
 
