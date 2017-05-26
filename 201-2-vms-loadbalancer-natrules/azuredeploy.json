@@ -121,12 +121,12 @@
       "type": "Microsoft.Compute/availabilitySets",
       "name": "[variables('availabilitySetName')]",
       "apiVersion": "2016-04-30-preview",
-      "location": "[resourceGroup().location]"
-	//"properties": {
-	 //   "platformFaultDomainCount": "2",
-	 //   "platformUpdateDomainCount": "2",
-	  //  "managed" : "true"
-//	}
+      "location": "[resourceGroup().location]",
+	    "properties": {
+	       "platformFaultDomainCount": "2",
+	       "platformUpdateDomainCount": "2",
+	       "managed" : "False"
+	  }
     },
     {
       "apiVersion": "2015-06-15",
@@ -290,13 +290,13 @@
               "id": "[resourceId('Microsoft.Network/networkInterfaces',concat(parameters('nicNamePrefix'),copyindex()))]"
             }
           ]
+        },
+        "diagnosticsProfile": {
+          "bootDiagnostics": {
+             "enabled": "true",
+             "storageUri": "[concat('http://',variables('storageAccountName'),'.blob.core.chinacloudapi.cn')]"
+          }
         }
-        //"diagnosticsProfile": {
-        //  "bootDiagnostics": {
-        //     "enabled": "true",
-        //     "storageUri": "[concat('http://',variables('storageAccountName'),'.blob.core.windows.net')]"
-        //  }
-       // }
       }
     }
   ]
