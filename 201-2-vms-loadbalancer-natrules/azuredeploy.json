@@ -120,12 +120,12 @@
     {
       "type": "Microsoft.Compute/availabilitySets",
       "name": "[variables('availabilitySetName')]",
-      "apiVersion": "2016-04-30-preview",
+      "apiVersion": "2015-06-15",
       "location": "[resourceGroup().location]",
 	    "properties": {
 	       "platformFaultDomainCount": "2",
-	       "platformUpdateDomainCount": "2",
-	       "managed" : "false"
+	       "platformUpdateDomainCount": "2"
+	       //"managed" : "false"
 	  }
     },
     {
@@ -248,7 +248,7 @@
       }
     },
     {
-      "apiVersion": "2016-04-30-preview",
+      "apiVersion": "2015-06-15",
       "type": "Microsoft.Compute/virtualMachines",
       "name": "[concat(parameters('vmNamePrefix'), copyindex())]",
       "copy": {
