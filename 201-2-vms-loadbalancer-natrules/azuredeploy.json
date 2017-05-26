@@ -125,7 +125,7 @@
 	    "properties": {
 	       "platformFaultDomainCount": "2",
 	       "platformUpdateDomainCount": "2",
-	       "managed" : "False"
+	       "managed" : "false"
 	  }
     },
     {
