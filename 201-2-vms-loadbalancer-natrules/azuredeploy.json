@@ -281,6 +281,11 @@
             "version": "latest"
           },
           "osDisk": {
+            "name": "osdisk1",
+            "vhd": {
+              "uri": "[concat('http://',variables('storageAccountName'),'.blob.core.chinacloudapi.cn/','vhds','/','osdisk1.vhd')]"
+            },
+            "caching": "ReadWrite",
             "createOption": "FromImage"
           }
         },
