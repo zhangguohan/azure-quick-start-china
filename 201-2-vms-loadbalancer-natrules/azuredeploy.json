@@ -94,8 +94,6 @@
   },
   "variables": {
     "storageAccountType": "Standard_LRS",
-    "namingInfix": "[toLower(substring(concat(parameters('vmNamePrefix'), uniqueString(resourceGroup().id)), 0, 9))]",
-    "vhdContainerName": "[concat(variables('namingInfix'), 'vhd')]",
     "availabilitySetName": "myAvSet",
     "addressPrefix": "10.0.0.0/16",
     "subnetName": "Subnet-1",
@@ -113,7 +111,7 @@
     {
       "type": "Microsoft.Storage/storageAccounts",
       "name": "[variables('storageAccountName')]",
-      "apiVersion": "2015-06-15",
+      "apiVersion": "2015-05-01-preview",
       "location": "[resourceGroup().location]",
       "properties": {
         "accountType": "[variables('storageAccountType')]"
@@ -122,7 +120,7 @@
     {
       "type": "Microsoft.Compute/availabilitySets",
       "name": "[variables('availabilitySetName')]",
-      "apiVersion": "2015-06-15",
+      "apiVersion": "2016-04-30-preview",
       "location": "[resourceGroup().location]",
 	    "properties": {
 	       "platformFaultDomainCount": "2",
@@ -250,7 +248,7 @@
       }
     },
     {
-      "apiVersion": "2015-06-15",
+      "apiVersion": "2016-04-30-preview",
       "type": "Microsoft.Compute/virtualMachines",
       "name": "[concat(parameters('vmNamePrefix'), copyindex())]",
       "copy": {
@@ -283,9 +281,9 @@
             "version": "latest"
           },
           "osDisk": {
-            "name": "[concat(parameters('vmNamePrefix'), copyIndex())]",
+            "name": "osdisk",
             "vhd": {
-              "uri": "[concat('http://',variables('storageAccountName'),'.blob.core.chinacloudapi.cn/',variables('vhdContainerName'),'/','osdisk.vhd')]"
+              "uri": "[concat('http://',variables('StorageAccountName'),'.blob.core.chinacloudapi.cn/vhds/','osdisk', copyIndex(), '.vhd')]"
             },
             "caching": "ReadWrite",
             "createOption": "FromImage"
