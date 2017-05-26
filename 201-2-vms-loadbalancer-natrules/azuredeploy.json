@@ -285,7 +285,7 @@
           "osDisk": {
             "name": "[concat(parameters('vmNamePrefix'), copyIndex())]",
             "vhd": {
-              "uri": "[concat('http://',variables('storageAccountName'),'.blob.core.chinacloudapi.cn/',variables('vhdContainerName'),'/','.vhd')]"
+              "uri": "[concat('http://',variables('storageAccountName'),'.blob.core.chinacloudapi.cn/',variables('vhdContainerName'),'/','osdisk.vhd')]"
             },
             "caching": "ReadWrite",
             "createOption": "FromImage"
