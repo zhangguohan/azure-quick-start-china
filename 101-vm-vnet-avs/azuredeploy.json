@@ -1,0 +1,237 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "customVmName": {
+      "type": "string",
+      "metadata": {
+        "description": "This is the name of the your VM"
+      }
+    },
+    "dnsLabelPrefix": {
+      "type": "string",
+      "metadata": {
+        "description": "DNS Label for the Public IP. Must be lowercase. It should match with the following regular expression: ^[a-z][a-z0-9-]{1,61}[a-z0-9]$ or it will raise an error."
+      }
+    },
+    "adminUserName": {
+      "type": "string",
+      "metadata": {
+        "description": "User Name for the Virtual Machine"
+      }
+    },
+    "adminPassword": {
+      "type": "securestring",
+      "metadata": {
+        "description": "Password for the Virtual Machine"
+      }
+    },
+    "Publisher": {
+      "type": "string",
+      "allowedValues": [
+        "MicrosoftWindowsServer",
+        "Canonical",
+        "OpenLogic",
+        "SUSE"
+      ],
+      "metadata": {
+        "description": "This is the publisher on platform"
+      }
+    },
+    "Offer": {
+      "type": "string",
+      "allowedValues": [
+        "WindowsServer",
+        "UbuntuServer",
+        "CentOS",
+        "SLES"
+      ],
+      "metadata": {
+        "description": "This is the offer on platform"
+      }
+    },
+    "SKU": {
+      "type": "string",
+      "metadata": {
+        "description": "This is the SKU on platform"
+      }
+    },
+    "vmSize": {
+      "type": "string",
+      "metadata": {
+        "description": "This is the size of your VM"
+      }
+    },
+    "existingAvailiabilitySet": {
+      "type": "string",
+      "metadata": {
+        "description": "This is the AvailiabilitySet of your VM"
+      }
+    },
+    "newOrExistingVnet": {
+      "allowedValues": [ "new", "existing" ],
+      "type": "string",
+      "metadata": {
+        "description":  "Select if this template needs a new VNet or will reference an existing VNet"
+      }
+    },
+    "newOrExistingVnetName": {
+      "type": "string",
+      "defaultValue": "",
+      "metadata": {
+        "description": "New or Existing VNet Name"
+      }
+    },
+    "newOrExistingSubnetName": {
+      "type": "string",
+      "metadata": {
+        "description": "New or Existing subnet Name"
+      }
+    },
+    "existingVnetResourceGroupName": {
+      "type": "string",
+      "metadata": {
+        "description": "Resource group of the existing VNET"
+      }
+    }
+  },
+  "variables": {
+    "storageAccountType": "Standard_LRS",
+    "newStorageAccount": "[concat(parameters('customVmName'), 'sa')]",
+    "publicIPAddressName": "[concat(parameters('customVmName'),'IP')]",
+    "vmName": "[parameters('customVmName')]",
+    "nicName": "[concat(parameters('customVmName'),'Nic')]",
+    "publicIPAddressType": "Dynamic",
+    "apiVersion": "2015-06-15",
+    "templatelink": "[concat('https://raw.githubusercontent.com/dafoyiming/azure-quick-start-china/meat/101-vm-from-user-image-vnet/',parameters('newOrExistingVnet'),'vnet.json')]",
+    "version":"latest"
+  },
+  "resources": [
+    {
+      "type": "Microsoft.Storage/storageAccounts",
+      "name": "[variables('newStorageAccount')]",
+      "location": "[resourceGroup().location]",
+      "apiVersion": "2015-06-15",
+      "properties": {
+        "accountType": "[variables('storageAccountType')]"
+      }
+    },
+    {
+            "name": "[parameters('existingAvailiabilitySet')]",
+            "type": "Microsoft.Compute/availabilitySets",
+            "location": "[resourceGroup().location]",
+            "apiVersion": "2015-06-15",
+            "dependsOn": [ ],
+            "tags": {
+            "displayName": "existingAvailiabilitySet"
+            }
+        },
+    {
+            "apiVersion": "2015-01-01",
+            "name": "vnet-template",
+            "type": "Microsoft.Resources/deployments",
+            "properties": {
+                "mode": "incremental",
+                "templateLink": {
+                    "uri": "[variables('templatelink')]",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "virtualNetworkName": {
+                        "value": "[parameters('newOrExistingVnetName')]"
+                    },
+                    "subnetName": {
+                        "value": "[parameters('newOrExistingSubnetName')]"
+                    },
+                    "existingVnetResourceGroupName": {
+                        "value": "[parameters('existingVnetResourceGroupName')]"
+                    }
+                }
+            }
+        },
+    {
+      "apiVersion": "[variables('apiVersion')]",
+      "type": "Microsoft.Network/publicIPAddresses",
+      "name": "[variables('publicIPAddressName')]",
+      "location": "[resourceGroup().location]",
+      "properties": {
+        "publicIPAllocationMethod": "[variables('publicIPAddressType')]",
+        "dnsSettings": {
+          "domainNameLabel": "[parameters('dnsLabelPrefix')]"
+        }
+      }
+    },
+    {
+      "apiVersion": "2016-03-30",
+      "type": "Microsoft.Network/networkInterfaces",
+      "name": "[variables('nicName')]",
+      "location": "[resourceGroup().location]",
+      "dependsOn": [
+        "[concat('Microsoft.Network/publicIPAddresses/', variables('publicIPAddressName'))]",
+        "Microsoft.Resources/deployments/vnet-template"
+      ],
+      "properties": {
+        "ipConfigurations": [
+          {
+            "name": "ipconfig1",
+            "properties": {
+              "privateIPAllocationMethod": "Dynamic",
+              "publicIPAddress": {
+                "id": "[resourceId('Microsoft.Network/publicIPAddresses',variables('publicIPAddressName'))]"
+              },
+              "subnet": {
+                "id": "[reference('vnet-template').outputs.subnet1Ref.value]"
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "apiVersion": "[variables('apiVersion')]",
+      "type": "Microsoft.Compute/virtualMachines",
+      "name": "[variables('vmName')]",
+      "location": "[resourceGroup().location]",
+      "dependsOn": [
+        "[concat('Microsoft.Network/networkInterfaces/', variables('nicName'))]",
+        "[concat('Microsoft.Compute/availabilitySets/', parameters('existingAvailiabilitySet'))]"  
+      ],
+      "properties": {
+        "hardwareProfile": {
+          "vmSize": "[parameters('vmSize')]"
+        },
+        "osProfile": {
+          "computerName": "[variables('vmName')]",
+          "adminUsername": "[parameters('adminUsername')]",
+          "adminPassword": "[parameters('adminPassword')]"
+        },
+        "storageProfile": {
+          "imageReference": {
+            "publisher": "[parameters('Publisher')]",
+            "offer": "[parameters('Offer')]",
+            "sku": "[parameters('SKU')]",
+            "version": "latest"
+            },
+          "osDisk": {
+            "name": "[concat(variables('vmName'),'-osDisk')]",
+            "caching": "ReadWrite",
+            "createOption": "FromImage",
+            "vhd": {
+              "uri": "[concat('http://', variables('newStorageAccount'), '.blob.core.chinacloudapi.cn/', 'vhd/', parameters('customVmName'), '.vhd')]"
+            }
+          }
+        },
+        "networkProfile": {
+          "networkInterfaces": [
+            {
+              "id": "[resourceId('Microsoft.Network/networkInterfaces',variables('nicName'))]"
+            }
+          ]
+        },
+        "availabilitySet": { 
+              "id": "[concat(resourceId(parameters('existingVnetResourceGroupName'), 'Mircosoft.Compute/availabilitySets/', parameters('existingAvailiabilitySet')))]"
+        }
+      }
+    }
+  ]
+}
