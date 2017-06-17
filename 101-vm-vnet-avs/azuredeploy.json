@@ -26,7 +26,7 @@
         "description": "Password for the Virtual Machine"
       }
     },
-    "Publisher": {
+    "ImagePublisher": {
       "type": "string",
       "allowedValues": [
         "MicrosoftWindowsServer",
@@ -35,10 +35,10 @@
         "SUSE"
       ],
       "metadata": {
-        "description": "This is the publisher on platform"
+        "description": "the image publisher"
       }
     },
-    "Offer": {
+    "ImageOffer": {
       "type": "string",
       "allowedValues": [
         "WindowsServer",
@@ -47,13 +47,13 @@
         "SLES"
       ],
       "metadata": {
-        "description": "This is the offer on platform"
+        "description": "the image offer"
       }
     },
     "SKU": {
       "type": "string",
       "metadata": {
-        "description": "This is the SKU on platform"
+        "description": "the image SKU"
       }
     },
     "vmSize": {
@@ -97,19 +97,18 @@
   },
   "variables": {
     "storageAccountType": "Standard_LRS",
-    "newStorageAccount": "[concat(parameters('customVmName'), 'sa')]",
     "publicIPAddressName": "[concat(parameters('customVmName'),'IP')]",
     "vmName": "[parameters('customVmName')]",
     "nicName": "[concat(parameters('customVmName'),'Nic')]",
     "publicIPAddressType": "Dynamic",
     "apiVersion": "2015-06-15",
     "templatelink": "[concat('https://raw.githubusercontent.com/dafoyiming/azure-quick-start-china/meat/101-vm-from-user-image-vnet/',parameters('newOrExistingVnet'),'vnet.json')]",
-    "version":"latest"
+    "storageAccountName": "[uniqueString(resourceGroup().id)]"
   },
   "resources": [
     {
       "type": "Microsoft.Storage/storageAccounts",
-      "name": "[variables('newStorageAccount')]",
+      "name": "[variables('storageAccountName')]",
       "location": "[resourceGroup().location]",
       "apiVersion": "2015-06-15",
       "properties": {
@@ -207,8 +206,8 @@
         },
         "storageProfile": {
           "imageReference": {
-            "publisher": "[parameters('Publisher')]",
-            "offer": "[parameters('Offer')]",
+            "publisher": "[parameters('ImagePublisher')]",
+            "offer": "[parameters('ImageOffer')]",
             "sku": "[parameters('SKU')]",
             "version": "latest"
             },
@@ -217,7 +216,7 @@
             "caching": "ReadWrite",
             "createOption": "FromImage",
             "vhd": {
-              "uri": "[concat('http://', variables('newStorageAccount'), '.blob.core.chinacloudapi.cn/', 'vhd/', parameters('customVmName'), '.vhd')]"
+              "uri": "[concat('http://', variables('storageAccountName'), '.blob.core.chinacloudapi.cn/vhd/',parameters('customVmName'), 'osdisk','.vhd')]"
             }
           }
         },
@@ -230,6 +229,12 @@
         },
         "availabilitySet": { 
               "id": "[concat(resourceId(parameters('existingVnetResourceGroupName'), 'Mircosoft.Compute/availabilitySets/', parameters('existingAvailiabilitySet')))]"
+        },
+        "diagnosticsProfile": {
+          "bootDiagnostics": {
+             "enabled": "true",
+             "storageUri": "[concat('http://',variables('storageAccountName'),'.blob.core.chinacloudapi.cn')]"
+          }
         }
       }
     }
