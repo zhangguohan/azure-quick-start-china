@@ -90,6 +90,7 @@
     "subnetName": "Subnet-1",
     "subnetPrefix": "10.0.0.0/24",
     "publicIPAddressType": "Dynamic",
+    "publicIPAddressId": "[resourceId('Microsoft.Network/publicIPAddresses', parameters('publicIPAddressName'))]",
     "vnetID": "[resourceId('Microsoft.Network/virtualNetworks',parameters('vnetName'))]",
     "subnetRef": "[concat(variables('vnetID'),'/subnets/',variables ('subnetName'))]",
     "storageAccountName": "[uniqueString(resourceGroup().id)]"
@@ -161,7 +162,7 @@
             "properties": {
               "privateIPAllocationMethod": "Dynamic",
               "publicIPAddress": {
-                "id": "[concat('Microsoft.Network/publicIPAddresses/', parameters('publicIPAddressName'), copyindex())]"
+                "id": "[concat(variables('publicIPAddressId'),copyindex())]"
               },
               "subnet": {
                 "id": "[variables('subnetRef')]"
