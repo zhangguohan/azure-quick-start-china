@@ -37,9 +37,8 @@
     },
     "dnsNamePrefix": {
       "type": "string",
-      "defaultValue": "uniqueDnsName",
       "metadata": {
-        "description": "Unique DNS name"
+        "description": "^[a-z][a-z0-9-]{1,61}[a-z0-9]$"
       }
     },
     "vnetName": {
