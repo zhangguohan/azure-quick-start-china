@@ -103,7 +103,7 @@
     "subnetRef": "[concat(variables('vnetID'),'/subnets/',variables ('subnetName'))]",
     "publicIPAddressID": "[resourceId('Microsoft.Network/publicIPAddresses',parameters('publicIPAddressName'))]",
     "lbID": "[resourceId('Microsoft.Network/loadBalancers',parameters('lbName'))]",
-    "numberOfInstances": 5,
+    "numberOfInstances": 2,
     "frontEndIPConfigID": "[concat(variables('lbID'),'/frontendIPConfigurations/loadBalancerFrontend')]",
     "storageAccountName": "[uniqueString(resourceGroup().id)]"
   },
