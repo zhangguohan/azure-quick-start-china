@@ -101,8 +101,12 @@
     {
       "apiVersion": "2015-06-15",
       "type": "Microsoft.Network/publicIPAddresses",
-      "name": "[parameters('publicIPAddressName')]",
+      "name": "[concat(parameters('publicIPAddressName'), copyindex())]",
       "location": "[resourceGroup().location]",
+      "copy": {
+      "name": "pipLoop",
+      "count": "[parameters('numberOfInstances')]"
+      },
       "properties": {
         "publicIPAllocationMethod": "[variables('publicIPAddressType')]"
         }
@@ -138,7 +142,7 @@
         "count": "[parameters('numberOfInstances')]"
       },
       "dependsOn": [
-        "[concat('Microsoft.Network/publicIPAddresses/', parameters('publicIPAddressName'))]",
+        "[concat('Microsoft.Network/publicIPAddresses/', parameters('publicIPAddressName'), copyindex())]",
         "[concat('Microsoft.Network/virtualNetworks/', parameters('vnetName'))]"
       ],
       "properties": {
