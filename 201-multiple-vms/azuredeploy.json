@@ -138,6 +138,7 @@
         "count": "[parameters('numberOfInstances')]"
       },
       "dependsOn": [
+        "[concat('Microsoft.Network/publicIPAddresses/', parameters('publicIPAddressName'))]",
         "[concat('Microsoft.Network/virtualNetworks/', parameters('vnetName'))]"
       ],
       "properties": {
@@ -146,6 +147,9 @@
             "name": "ipconfig1",
             "properties": {
               "privateIPAllocationMethod": "Dynamic",
+              "publicIPAddress": {
+                "id": "[resourceId('Microsoft.Network/publicIPAddresses',parameters('publicIPAddressName'))]"
+              },
               "subnet": {
                 "id": "[variables('subnetRef')]"
               }
