@@ -1,5 +1,4 @@
-# Create 2 Virtual Machines in an Availability Set and Configure NAT Rules through the Load balancer
-
+# Create multiple Virtual Machines 
 <a href="https://portal.azure.cn/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fdafoyiming%2Fazure-quick-start-china%2Fmeat%2F201-multiple-vms%2Fazuredeploy.json" target="_blank">
     <img src="http://azuredeploy.net/deploybutton.png"/>
 </a>
