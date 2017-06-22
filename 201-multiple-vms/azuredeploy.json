@@ -35,6 +35,13 @@
         "description": "Public IP Address Name"
       }
     },
+    "dnsNamePrefix": {
+      "type": "string",
+      "defaultValue": "uniqueDnsName",
+      "metadata": {
+        "description": "Unique DNS name"
+      }
+    },
     "vnetName": {
       "type": "string",
       "defaultValue": "myVNET",
@@ -108,7 +115,10 @@
       "count": "[parameters('numberOfInstances')]"
       },
       "properties": {
-        "publicIPAllocationMethod": "[variables('publicIPAddressType')]"
+        "publicIPAllocationMethod": "[variables('publicIPAddressType')]",
+        "dnsSettings": {
+        "domainNameLabel": "[concat(parameters('dnsNamePrefix'), copyindex())]"
+        }
         }
     },
     {
