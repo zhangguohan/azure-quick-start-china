@@ -161,7 +161,7 @@
             "properties": {
               "privateIPAllocationMethod": "Dynamic",
               "publicIPAddress": {
-                "id": "[resourceId('Microsoft.Network/publicIPAddresses',concat(parameters('publicIPAddressName')),copyindex())]"
+                "id": "resouceid([concat('Microsoft.Network/publicIPAddresses/',parameters('publicIPAddressName'),copyindex())])"
               },
               "subnet": {
                 "id": "[variables('subnetRef')]"
