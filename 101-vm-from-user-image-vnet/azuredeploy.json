@@ -140,7 +140,7 @@
                     "subnetName": {
                         "value": "[parameters('newOrExistingSubnetName')]"
                     },
-                    "VnetResourceGroupName": {
+                    "ExistingVnetResourceGroupName": {
                         "value": "[parameters('VnetResourceGroupName')]"
                     }
                 }
