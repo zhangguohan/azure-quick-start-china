@@ -94,6 +94,7 @@
     }
   },
   "variables": {
+    "diagStorageAccountName": "[concat(uniquestring(resourceGroup().id), 'specvm')]",
     "publicIPAddressName": "[concat(parameters('customVmName'),'IP')]",
     "vmName": "[parameters('customVmName')]",
     "nicName": "[concat(parameters('customVmName'),'Nic')]",
@@ -218,13 +219,14 @@
         },
         "availabilitySet": { 
               "id": "[concat(resourceId(parameters('existingVnetResourceGroupName'), 'Mircosoft.Compute/availabilitySets/', parameters('existingAvailiabilitySet')))]"
+        },
+        "diagnosticsProfile": {
+          "bootDiagnostics": {
+            "enabled": "true",
+            "storageUri": "[concat(reference(concat('Microsoft.Storage/storageAccounts/', variables('diagStorageAccountName')), '2016-01-01').primaryEndpoints.blob)]" 
+            //"storageUri": "[concat(reference(resourceId(parameters('userImageStorageAccountResourceGroupName'), 'Microsoft.Storage/storageAccounts/', parameters('userImageStorageAccountName')), variables('apiVersion')).primaryEndpoints.blob)]"
+          }
         }
-        //"diagnosticsProfile": {
-        //  "bootDiagnostics": {
-        //    "enabled": "true",
-        //    "storageUri": "[concat(reference(resourceId(parameters('userImageStorageAccountResourceGroupName'), 'Microsoft.Storage/storageAccounts/', parameters('userImageStorageAccountName')), variables('apiVersion')).primaryEndpoints.blob)]"
-        //  }
-        // }
       }
     }
   ]
