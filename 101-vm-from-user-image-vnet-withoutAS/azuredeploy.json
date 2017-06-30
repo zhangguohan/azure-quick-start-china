@@ -60,12 +60,6 @@
         "description": "This is the size of your VM"
       }
     },
-    "existingAvailiabilitySet": {
-      "type": "string",
-      "metadata": {
-        "description": "This is the AvailiabilitySet of your VM"
-      }
-    },
     "newOrExistingVnet": {
       "allowedValues": [ "new", "existing" ],
       "type": "string",
@@ -86,14 +80,16 @@
         "description": "New or Existing subnet Name"
       }
     },
-    "existingVnetResourceGroupName": {
+    "VnetResourceGroupName": {
       "type": "string",
       "metadata": {
-        "description": "Resource group of the existing VNET"
+        "description": "Resource group of the VNET"
       }
     }
   },
   "variables": {
+    "storageAccountType": "Standard_LRS",
+    "diagStorageAccountName": "[concat(uniquestring(resourceGroup().id), 'specvm')]",
     "publicIPAddressName": "[concat(parameters('customVmName'),'IP')]",
     "vmName": "[parameters('customVmName')]",
     "nicName": "[concat(parameters('customVmName'),'Nic')]",
@@ -102,6 +98,15 @@
     "templatelink": "[concat('https://raw.githubusercontent.com/dafoyiming/azure-quick-start-china/meat/101-vm-from-user-image-vnet/',parameters('newOrExistingVnet'),'vnet.json')]"
   },
   "resources": [
+    {
+      "type": "Microsoft.Storage/storageAccounts",
+      "name": "[variables('diagStorageAccountName')]",
+      "apiVersion": "2015-05-01-preview",
+      "location": "[resourceGroup().location]",
+      "properties": {
+        "accountType": "[variables('storageAccountType')]"
+      }
+    },
     {
             "apiVersion": "2015-01-01",
             "name": "vnet-template",
@@ -120,7 +125,7 @@
                         "value": "[parameters('newOrExistingSubnetName')]"
                     },
                     "existingVnetResourceGroupName": {
-                        "value": "[parameters('existingVnetResourceGroupName')]"
+                        "value": "[parameters('VnetResourceGroupName')]"
                     }
                 }
             }
@@ -200,6 +205,12 @@
               "id": "[resourceId('Microsoft.Network/networkInterfaces',variables('nicName'))]"
             }
           ]
+        },
+        "diagnosticsProfile": {
+          "bootDiagnostics": {
+            "enabled": "true",
+            "storageUri": "[concat('http://',variables('diagStorageAccountName'),'.blob.core.chinacloudapi.cn')]"
+          }
         }
       }
     }
