@@ -224,7 +224,7 @@
           "bootDiagnostics": {
             "enabled": "true",
             //"storageUri": "[concat(reference(concat('Microsoft.Storage/storageAccounts/', variables('diagStorageAccountName','.blob.core.chinacloudapi.cn'))]" 
-            "storageUri": "[concat('http://',variables('diagStorageAccountName'),'.blob.core.chinacloudapi.cn')]"
+            "storageUri": "[concat('http://',parameters('userImageStorageAccountName'),'.blob.core.chinacloudapi.cn')]"
             //"storageUri": "[concat(reference(resourceId(parameters('userImageStorageAccountResourceGroupName'), 'Microsoft.Storage/storageAccounts/', parameters('userImageStorageAccountName')), variables('apiVersion')).primaryEndpoints.blob)]"
           }
         }
