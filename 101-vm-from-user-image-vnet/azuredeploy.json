@@ -63,7 +63,7 @@
     "existingAvailiabilitySet": {
       "type": "string",
       "metadata": {
-        "description": "This is the AvailiabilitySet of your VM"
+        "description": "This is the Availiability Set of your VM"
       }
     },
     "newOrExistingVnet": {
@@ -86,10 +86,10 @@
         "description": "New or Existing subnet Name"
       }
     },
-    "existingVnetResourceGroupName": {
+    "VnetResourceGroupName": {
       "type": "string",
       "metadata": {
-        "description": "Resource group of the existing VNET"
+        "description": "Resource group of VNET"
       }
     }
   },
@@ -140,8 +140,8 @@
                     "subnetName": {
                         "value": "[parameters('newOrExistingSubnetName')]"
                     },
-                    "existingVnetResourceGroupName": {
-                        "value": "[parameters('existingVnetResourceGroupName')]"
+                    "VnetResourceGroupName": {
+                        "value": "[parameters('VnetResourceGroupName')]"
                     }
                 }
             }
@@ -224,7 +224,7 @@
           ]
         },
         "availabilitySet": { 
-              "id": "[concat(resourceId(parameters('existingVnetResourceGroupName'), 'Mircosoft.Compute/availabilitySets/', parameters('existingAvailiabilitySet')))]"
+              "id": "[concat(resourceId(parameters('VnetResourceGroupName'), 'Mircosoft.Compute/availabilitySets/', parameters('existingAvailiabilitySet')))]"
         },
         "diagnosticsProfile": {
           "bootDiagnostics": {
