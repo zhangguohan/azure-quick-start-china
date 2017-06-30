@@ -94,6 +94,7 @@
     }
   },
   "variables": {
+    "storageAccountType": "Standard_LRS",
     "diagStorageAccountName": "[concat(uniquestring(resourceGroup().id), 'specvm')]",
     "publicIPAddressName": "[concat(parameters('customVmName'),'IP')]",
     "vmName": "[parameters('customVmName')]",
@@ -104,6 +105,15 @@
   },
   "resources": [
     {
+      "type": "Microsoft.Storage/storageAccounts",
+      "name": "[variables('diagStorageAccountName')]",
+      "apiVersion": "2015-05-01-preview",
+      "location": "[resourceGroup().location]",
+      "properties": {
+        "accountType": "[variables('storageAccountType')]"
+      }
+    },
+    {
             "name": "[parameters('existingAvailiabilitySet')]",
             "type": "Microsoft.Compute/availabilitySets",
             "location": "[resourceGroup().location]",
@@ -112,10 +122,6 @@
             "tags": {
             "displayName": "existingAvailiabilitySet"
             }
-           // "properties": {
-           // "platformUpdateDomainCount": 5,
-           // "platformFaultDomainCount": 2
-           // }
         },
     {
             "apiVersion": "2015-01-01",
@@ -223,9 +229,7 @@
         "diagnosticsProfile": {
           "bootDiagnostics": {
             "enabled": "true",
-            //"storageUri": "[concat(reference(concat('Microsoft.Storage/storageAccounts/', variables('diagStorageAccountName','.blob.core.chinacloudapi.cn'))]" 
-            "storageUri": "[concat('http://',parameters('userImageStorageAccountName'),'.blob.core.chinacloudapi.cn')]"
-            //"storageUri": "[concat(reference(resourceId(parameters('userImageStorageAccountResourceGroupName'), 'Microsoft.Storage/storageAccounts/', parameters('userImageStorageAccountName')), variables('apiVersion')).primaryEndpoints.blob)]"
+            "storageUri": "[concat('http://',variables('diagStorageAccountName'),'.blob.core.chinacloudapi.cn')]"
           }
         }
       }
