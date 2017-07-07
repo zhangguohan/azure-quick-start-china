@@ -87,8 +87,7 @@
     "computeApiVersion": "2016-03-30",
     "networkApiVersion": "2016-03-30",
     "storageApiVersion": "2015-06-15",
-    "insightsApiVersion": "2015-04-01",
-    "zkProbeName": "zkProbe"
+    "insightsApiVersion": "2015-04-01"
   },
   "resources": [
    {
@@ -162,41 +161,8 @@
               "backendPort": "[variables('natBackendPort')]"
             }
           }
-        ],
-        "loadBalancingRules": [
-            {
-            "name": "ZKRule",
-            "properties": {
-              "loadDistribution": "Default",
-              "frontendIPConfiguration": {
-                "id": "[variables('frontEndIPConfigID')]"
-              },
-              "backendAddressPool": {
-                "id": "[variables('bePoolName')]"
-              },
-              "protocol": "Tcp",
-              "frontendPort": 2128,
-              "backendPort": 2128,
-              "enableFloatingIP": false,
-              "idleTimeoutInMinutes": 5,
-              "probe": {
-                "id": "[concat(resourceId('Microsoft.Network/loadBalancers', variables('loadBalancerName')), '/probes/', variables('zkProbeName'))]"
-              }
-            }
-          }
-        ],
-        "probes": [
-          {
-            "name": "[variables('zkProbeName')]",
-            "properties": {
-              "protocol": "Tcp",
-              "port": 2128,
-              "intervalInSeconds": 5,
-              "numberOfProbes": 2
-            }
-          }
         ]
-      }  
+      }
     },
     {
       "type": "Microsoft.Compute/virtualMachineScaleSets",
