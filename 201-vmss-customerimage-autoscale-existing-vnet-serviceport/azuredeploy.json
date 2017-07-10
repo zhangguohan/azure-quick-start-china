@@ -47,16 +47,22 @@
         "description": "Resource ID of the existing subnet to deploy the scale set into. Should be of the form: /subscriptions/YOUR_SUBSCRIPTION_ID/resourceGroups/YOUR_RESOURCE_GROUP/providers/Microsoft.Network/virtualNetworks/YOUR_VNET_NAME/subnets/YOUR_SUBNET_NAME"
       }
     },
+    "CustomerServiceName": {
+      "type": "string",
+      "metadata": {
+        "description": "The name of customer Service"
+      }
+    },
     "FrontServicePort": {
       "type": "int",
       "metadata": {
-        "description": "The front Service Port of customer require"
+        "description": "The front Service Port of customer Service"
       }
     },
     "BackServicePort": {
       "type": "int",
       "metadata": {
-        "description": "The back Service Port of customer require"
+        "description": "The back Service Port of customer Service"
       }
     }
   },
@@ -88,7 +94,6 @@
     "nicName": "[concat(variables('namingInfix'), 'nic')]",
     "ipConfigName": "[concat(variables('namingInfix'), 'ipconfig')]",
     "frontEndIPConfigID": "[concat(variables('lbID'),'/frontendIPConfigurations/loadBalancerFrontEnd')]",
-    "CustomerProbeName": "serviceProbe",
     "diagnosticsStorageAccountName": "[concat(uniqueString(concat(resourceGroup().id, variables('newStorageAccountSuffix'))), variables('newStorageAccountSuffix'))]",
     "diagnosticsStorageAccountResourceGroup": "[resourceGroup().name]",
     "accountid": "[concat('/subscriptions/',subscription().subscriptionId,'/resourceGroups/',variables('diagnosticsStorageAccountResourceGroup'),'/providers/','Microsoft.Storage/storageAccounts/', variables('diagnosticsStorageAccountName'))]",
@@ -178,7 +183,7 @@
         ],
         "loadBalancingRules": [
           {
-            "name": "[concat(variables('CustomerProbeName'), 'rule')]",
+            "name": "[concat(parameters('CustomerServiceName'), 'rule')]",
             "properties": {
               "loadDistribution": "Default",
               "frontendIPConfiguration": {
@@ -193,14 +198,14 @@
               "enableFloatingIP": false,
               "idleTimeoutInMinutes": 5,
               "probe": {
-                "id": "[concat(variables('lbId'), '/probes/', variables('CustomerProbeName'))]"
+                "id": "[concat(variables('lbId'), '/probes/', parameters('CustomerServiceName'))]"
               }
             }
           }
         ],
         "probes": [
           {
-            "name": "[variables('CustomerProbeName')]",
+            "name": "[parameters('CustomerServiceName')]",
             "properties": {
               "protocol": "Tcp",
               "port": "[parameters('BackServicePort')]",
