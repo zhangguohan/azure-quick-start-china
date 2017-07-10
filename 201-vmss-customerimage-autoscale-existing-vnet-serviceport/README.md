@@ -1,4 +1,4 @@
-### Autoscale a Linux VM Scale Set ###
+# Autoscale a Linux VM Scale Set ###
 
 #### 支持Linux 虚拟机已有镜像部署VMSS，镜像需要一般化
 #### 需要指定某个已经存在的VNET及SubNet
