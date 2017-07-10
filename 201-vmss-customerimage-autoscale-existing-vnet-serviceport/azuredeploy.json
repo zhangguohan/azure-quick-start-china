@@ -178,7 +178,7 @@
         ],
         "loadBalancingRules": [
           {
-            "name": "HTTPRule",
+            "name": "[concat(variables('CustomerProbeName'), 'rule')]",
             "properties": {
               "loadDistribution": "Default",
               "frontendIPConfiguration": {
