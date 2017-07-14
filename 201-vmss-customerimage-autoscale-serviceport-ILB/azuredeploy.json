@@ -180,7 +180,7 @@
         ]
       }
     },
-    {
+ /*   {
       "type": "Microsoft.Network/publicIPAddresses",
       "name": "[variables('publicIPAddressName')]",
       "location": "[resourceGroup().location]",
@@ -191,7 +191,7 @@
           "domainNameLabel": "[variables('longNamingInfix')]"
         }
       }
-    },
+    },*/
     {
       "apiVersion": "[variables('networkApiVersion')]",
       "type": "Microsoft.Network/virtualNetworks",
