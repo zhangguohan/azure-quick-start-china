@@ -10,11 +10,11 @@ Linux 在操作系统内部执行
 sudo waagent-deprovision
 
 Azure CLI 捕获镜像
-1.azure login -e azurechinacloud -u youradmin@org.partner.onmschina.cn
-2.azure account set yoursubscriptionname
-3.azure vm deallocate -g yourresourcegroup -n yourvmname
-4.azure vm generalize -g yourresourcegroup -n yourvmname
-5.azure vm capture -g yourresourcegroup -n yourvmname -p yourvmname -t yourvmnameTemplate.json
+1. azure login -e azurechinacloud -u youradmin@org.partner.onmschina.cn
+2. azure account set yoursubscriptionname
+3. azure vm deallocate -g yourresourcegroup -n yourvmname
+4. azure vm generalize -g yourresourcegroup -n yourvmname
+5. azure vm capture -g yourresourcegroup -n yourvmname -p yourvmname -t yourvmnameTemplate.json
 
 The Autoscale rules are configured as follows
 - sample for CPU (\\Processor\\PercentProcessorTime) in each VM every 1 Minute
