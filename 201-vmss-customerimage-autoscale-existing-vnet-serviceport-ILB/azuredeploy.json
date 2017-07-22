@@ -203,7 +203,7 @@
       "location": "[resourceGroup().location]",
       "apiVersion": "[variables('networkApiVersion')]",
       "dependsOn": [
-        "[concat('Microsoft.Network/virtualNetworks/', parameters('existingvirtualNetworkName'))]"
+        "[variables('vnetID')]"
       ],
       "properties": {
         "frontendIPConfigurations": [
