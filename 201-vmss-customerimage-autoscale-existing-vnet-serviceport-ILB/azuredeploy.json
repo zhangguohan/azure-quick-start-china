@@ -99,7 +99,7 @@
     ],
     "saCount": "[length(variables('uniqueStringArray'))]",
     "osDiskName": "[concat(variables('namingInfix'), 'osdisk')]",
-    "vnetID": "[resourceId('Microsoft.Network/virtualNetworks',parameters('existingvirtualNetworkName'))]",
+    "vnetID": "[concat('/subscriptions/', subscription().subscriptionId,'/resourceGroups/', resourceGroup().name, '/providers/Microsoft.Network/virtualNetworks/',parameters('existingvirtualNetworkName'))]",
     "subnetRef": "[concat('/subscriptions/', subscription().subscriptionId,'/resourceGroups/', resourceGroup().name, '/providers/Microsoft.Network/virtualNetworks/',parameters('existingvirtualNetworkName'), '/subnets/', parameters('existingsubnetName'))]",
     "loadBalancerName": "[concat(variables('namingInfix'), 'lb')]",
     "lbID": "[resourceId('Microsoft.Network/loadBalancers',variables('loadBalancerName'))]",
