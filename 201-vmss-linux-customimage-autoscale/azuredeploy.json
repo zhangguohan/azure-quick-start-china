@@ -106,7 +106,8 @@
     }
   },
   "variables": {
-      "vmssuniqueName": "[toLower(substring(concat(substring(parameters('vmssName'),0,6), uniqueString(resourceGroup().id)), 0, 9))]",  
+      "vmssuniqueName": "[toLower(substring(concat(substring(parameters('vmssName'),0,6), uniqueString(resourceGroup().id)), 0, 9))]", 
+      "wadnameInfix": "[concat(variables('vmssuniqueName'), 'autoscalewad')]", 
       "vmssaccountType": "Standard_LRS",
       "vmssnewAccountSuffix": "[concat(replace(variables('vmssuniqueName'),'-',''), 'sa')]",
       "vmssstorageAccounts": [
@@ -379,13 +380,13 @@
     {
       "type": "Microsoft.Insights/autoscaleSettings",
       "apiVersion": "2015-04-01",
-      "name": "autoscalesettings",
+      "name": "[variables('wadnameInfix')]",
       "location": "[resourceGroup().location]",
       "dependsOn": [
         "[concat('Microsoft.Compute/virtualMachineScaleSets/', variables('vmssuniqueName'))]"
       ],
       "properties": {
-        "name": "autoscalesettings",
+        "name": "[variables('wadnameInfix')]",
         "targetResourceUri": "[concat('/subscriptions/',subscription().subscriptionId, '/resourceGroups/',  resourceGroup().name, '/providers/Microsoft.Compute/virtualMachineScaleSets/', variables('vmssuniqueName'))]",
         "enabled": true,
         "profiles": [

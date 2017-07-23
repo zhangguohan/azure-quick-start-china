@@ -57,6 +57,7 @@
   "variables": {
     "storageAccountType": "Standard_LRS",
     "namingInfix": "[toLower(substring(concat(parameters('vmssName'), uniqueString(resourceGroup().id)), 0, 9))]",
+    "wadnameInfix": "[concat(variables('namingInfix'), 'autoscalewad')]",
     "longNamingInfix": "[toLower(parameters('vmssName'))]",
     "newStorageAccountSuffix": "[concat(variables('namingInfix'), 'sa')]",
     "uniqueStringArray": [
@@ -69,11 +70,7 @@
     "saCount": "[length(variables('uniqueStringArray'))]",
     "vhdContainerName": "[concat(variables('namingInfix'), 'vhd')]",
     "osDiskName": "[concat(variables('namingInfix'), 'osdisk')]",
-    //"addressPrefix": "10.0.0.0/16",
-    //"subnetPrefix": "10.0.0.0/24",
-    //"virtualNetworkName": "[concat(variables('namingInfix'), 'vnet')]",
     "publicIPAddressName": "[concat(variables('namingInfix'), 'pip')]",
-    //"subnetName": "[concat(variables('namingInfix'), 'subnet')]",
     "loadBalancerName": "[concat(variables('namingInfix'), 'lb')]",
     "publicIPAddressID": "[resourceId('Microsoft.Network/publicIPAddresses',variables('publicIPAddressName'))]",
     "lbID": "[resourceId('Microsoft.Network/loadBalancers',variables('loadBalancerName'))]",
@@ -107,27 +104,7 @@
     "insightsApiVersion": "2015-04-01"
   },
   "resources": [
-    //{
-      //"type": "Microsoft.Network/virtualNetworks",
-      //"name": "[variables('virtualNetworkName')]",
-      //"location": "[resourceGroup().location]",
-      //"apiVersion": "[variables('networkApiVersion')]",
-      //"properties": {
-      //  "addressSpace": {
-      //    "addressPrefixes": [
-      //      "[variables('addressPrefix')]"
-      //    ]
-      //  },
-      //  "subnets": [
-      //    {
-      //      "name": "[variables('subnetName')]",
-      //      "properties": {
-      //        "addressPrefix": "[variables('subnetPrefix')]"
-      //      }
-      //    }
-      //  ]
-      //}
-    //},
+
     {
       "type": "Microsoft.Storage/storageAccounts",
       "name": "[concat(variables('uniqueStringArray')[copyIndex()], variables('newStorageAccountSuffix'))]",
@@ -211,7 +188,6 @@
         "storageLoop",
         "[concat('Microsoft.Storage/storageAccounts/', variables('diagnosticsStorageAccountName'))]",
         "[concat('Microsoft.Network/loadBalancers/', variables('loadBalancerName'))]"
-        // "[concat('Microsoft.Network/virtualNetworks/', variables('virtualNetworkName'))]"
       ],
       "sku": {
         "name": "[parameters('vmSku')]",
@@ -302,13 +278,13 @@
     {
       "type": "Microsoft.Insights/autoscaleSettings",
       "apiVersion": "[variables('insightsApiVersion')]",
-      "name": "autoscalewad",
+      "name": "[variables('wadnameInfix')]",
       "location": "[resourceGroup().location]",
       "dependsOn": [
         "[concat('Microsoft.Compute/virtualMachineScaleSets/', variables('namingInfix'))]"
       ],
       "properties": {
-        "name": "autoscalewad",
+        "name": "[variables('wadnameInfix')]",
         "targetResourceUri": "[concat('/subscriptions/',subscription().subscriptionId, '/resourceGroups/',  resourceGroup().name, '/providers/Microsoft.Compute/virtualMachineScaleSets/', variables('namingInfix'))]",
         "enabled": true,
         "profiles": [
