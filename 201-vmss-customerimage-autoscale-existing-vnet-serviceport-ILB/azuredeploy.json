@@ -81,6 +81,7 @@
   "variables": {
     "storageAccountType": "Standard_LRS",
     "namingInfix": "[toLower(substring(concat(parameters('vmssName'), uniqueString(resourceGroup().id)), 0, 9))]",
+    "wadnameInfix": "[concat(variables('namingInfix'), 'autoscalewad')]",
     "newStorageAccountSuffix": "[concat(variables('namingInfix'), 'sa')]",
     "uniqueStringArray": [
       "[concat(uniqueString(concat(resourceGroup().id, variables('newStorageAccountSuffix'), '0')))]",
@@ -336,13 +337,13 @@
     {
       "type": "Microsoft.Insights/autoscaleSettings",
       "apiVersion": "[variables('insightsApiVersion')]",
-      "name": "[concat(variables('namingInfix'), 'autoscalewad')]",
+      "name": "[variables('wadnameInfix')]",
       "location": "[resourceGroup().location]",
       "dependsOn": [
         "[concat('Microsoft.Compute/virtualMachineScaleSets/', variables('namingInfix'))]"
       ],
       "properties": {
-        "name": "autoscalewad",
+        "name": "[variables('wadnameInfix')]",
         "targetResourceUri": "[concat('/subscriptions/',subscription().subscriptionId, '/resourceGroups/',  resourceGroup().name, '/providers/Microsoft.Compute/virtualMachineScaleSets/', variables('namingInfix'))]",
         "enabled": true,
         "profiles": [
