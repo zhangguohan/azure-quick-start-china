@@ -59,20 +59,6 @@
         "description": "existingsubnetName"
       }
     },
-   /* "vnetAddressPrefix": {
-      "type": "string",
-      "defaultValue": "10.0.0.0/16",
-      "metadata": {
-        "description": "address prefix"
-      }
-    },
-    "subnetPrefix": {
-      "type": "string",
-      "defaultValue": "10.0.0.0/24",
-      "metadata": {
-        "description": "Subnet prefix"
-      }
-    },*/
     "CustomerServiceName": {
       "type": "string",
       "metadata": {
@@ -106,7 +92,6 @@
     "saCount": "[length(variables('uniqueStringArray'))]",
     "osDiskName": "[concat(variables('namingInfix'), 'osdisk')]",
     "vnetID": "[concat('/subscriptions/', subscription().subscriptionId, '/resourceGroups/', parameters('existingVNetRGName'), '/providers/Microsoft.Network/virtualNetworks/', parameters('existingvirtualNetworkName'))]",
-    //"vnetID": "[concat('/subscriptions/', subscription().subscriptionId,'/resourceGroups/', resourceGroup().name, '/providers/Microsoft.Network/virtualNetworks/',parameters('existingvirtualNetworkName'))]",
     "subnetRef": "[concat(variables('vnetID'),'/subnets/',parameters('existingsubnetName'))]",
     "loadBalancerName": "[concat(variables('namingInfix'), 'lb')]",
     "lbID": "[resourceId('Microsoft.Network/loadBalancers',variables('loadBalancerName'))]",
@@ -183,27 +168,6 @@
         ]
       }
     },
-   /* {
-      "apiVersion": "[variables('networkApiVersion')]",
-      "type": "Microsoft.Network/virtualNetworks",
-      "name": "[parameters('virtualNetworkName')]",
-      "location": "[resourceGroup().location]",
-      "properties": {
-        "addressSpace": {
-          "addressPrefixes": [
-            "[parameters('vnetAddressPrefix')]"
-          ]
-        },
-        "subnets": [
-          {
-            "name": "[parameters('subnetName')]",
-            "properties": {
-              "addressPrefix": "[parameters('subnetPrefix')]"
-            }
-          }
-        ]
-      }
-    },*/
     {
       "type": "Microsoft.Network/loadBalancers",
       "name": "[variables('loadBalancerName')]",
@@ -284,8 +248,8 @@
       "apiVersion": "[variables('computeApiVersion')]",
       "dependsOn": [
         "storageLoop",
-        "[concat('Microsoft.Storage/storageAccounts/', variables('diagnosticsStorageAccountName'))]"
-        //"[concat('Microsoft.Network/loadBalancers/', variables('loadBalancerName'))]"
+        "[concat('Microsoft.Storage/storageAccounts/', variables('diagnosticsStorageAccountName'))]",
+        "[concat('Microsoft.Network/loadBalancers/', variables('loadBalancerName'))]"
       ],
       "sku": {
         "name": "[parameters('vmSku')]",
