@@ -284,8 +284,8 @@
       "apiVersion": "[variables('computeApiVersion')]",
       "dependsOn": [
         "storageLoop",
-        "[concat('Microsoft.Storage/storageAccounts/', variables('diagnosticsStorageAccountName'))]",
-        "[concat('Microsoft.Network/loadBalancers/', variables('loadBalancerName'))]"
+        "[concat('Microsoft.Storage/storageAccounts/', variables('diagnosticsStorageAccountName'))]"
+        //"[concat('Microsoft.Network/loadBalancers/', variables('loadBalancerName'))]"
       ],
       "sku": {
         "name": "[parameters('vmSku')]",
