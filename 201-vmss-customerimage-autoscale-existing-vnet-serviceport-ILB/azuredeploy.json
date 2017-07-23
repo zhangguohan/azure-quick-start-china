@@ -41,7 +41,13 @@
         "description": "Admin password on all VMs."
       }
     },
-   "existingvirtualNetworkName": {
+    "existingVNetRGName": {
+      "type": "string",
+      "metadata": {
+        "description": "existingVNetRGName"
+      }
+    },
+    "existingvirtualNetworkName": {
       "type": "string",
       "metadata": {
         "description": "existingvirtualNetworkName"
@@ -99,8 +105,9 @@
     ],
     "saCount": "[length(variables('uniqueStringArray'))]",
     "osDiskName": "[concat(variables('namingInfix'), 'osdisk')]",
-    "vnetID": "[concat('/subscriptions/', subscription().subscriptionId,'/resourceGroups/', resourceGroup().name, '/providers/Microsoft.Network/virtualNetworks/',parameters('existingvirtualNetworkName'))]",
-    "subnetRef": "[concat('/subscriptions/', subscription().subscriptionId,'/resourceGroups/', resourceGroup().name, '/providers/Microsoft.Network/virtualNetworks/',parameters('existingvirtualNetworkName'), '/subnets/', parameters('existingsubnetName'))]",
+    "vnetID": "[concat('/subscriptions/', subscription().subscriptionId, '/resourceGroups/', parameters('existingVNetRGName'), '/providers/Microsoft.Network/virtualNetworks/', parameters('existingvirtualNetworkName'))]",
+    //"vnetID": "[concat('/subscriptions/', subscription().subscriptionId,'/resourceGroups/', resourceGroup().name, '/providers/Microsoft.Network/virtualNetworks/',parameters('existingvirtualNetworkName'))]",
+    "subnetRef": "[concat(variables('vnetID'),'/subnets/',parameters('existingsubnetName'))]",
     "loadBalancerName": "[concat(variables('namingInfix'), 'lb')]",
     "lbID": "[resourceId('Microsoft.Network/loadBalancers',variables('loadBalancerName'))]",
     "bepoolID": "[concat(variables('lbID'),'/backendAddressPools/', variables('bepoolName'))]",
