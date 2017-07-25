@@ -117,7 +117,21 @@
     "computeApiVersion": "2016-03-30",
     "networkApiVersion": "2016-03-30",
     "storageApiVersion": "2015-06-15",
-    "insightsApiVersion": "2015-04-01"
+    "insightsApiVersion": "2015-04-01",
+    "jumpBoxName": "[concat(variables('namingInfix'), 'jbox')]",
+    "jumpBoxSAName": "[concat(uniqueString(concat(resourceGroup().id, variables('newStorageAccountSuffix'), 'jumpboxsa')), 'jb')]",
+    "jumpBoxOSDiskName": "[concat(variables('jumpBoxName'), 'osdisk')]",
+    "jumpBoxVHDContainerName": "[concat(variables('jumpBoxName'), 'vhd')]",
+    "jumpBoxIPConfigName": "[concat(variables('jumpBoxName'), 'ipconfig')]",
+    "jumpBoxNicName": "[concat(variables('jumpBoxName'), 'nic')]",
+    "publicIPAddressName": "[concat(variables('namingInfix'), 'pip')]",
+    "osType": {
+      "publisher": "MicrosoftWindowsServer",
+      "offer": "WindowsServer",
+      "sku": "2012-R2-Datacenter",
+      "version": "latest"
+    },
+    "imageReference": "[variables('osType')]"
   },
   "resources": [
    {
@@ -167,6 +181,85 @@
             }
           }
         ]
+      }
+    },
+        {
+      "type": "Microsoft.Storage/storageAccounts",
+      "name": "[variables('jumpBoxSAName')]",
+      "location": "[resourceGroup().location]",
+      "apiVersion": "[variables('storageApiVersion')]",
+      "properties": {
+        "accountType": "[variables('storageAccountType')]"
+      }
+    },
+    {
+      "type": "Microsoft.Network/networkInterfaces",
+      "name": "[variables('jumpBoxNicName')]",
+      "location": "[resourceGroup().location]",
+      "apiVersion": "[variables('networkApiVersion')]",
+      "dependsOn": [
+        "[concat('Microsoft.Network/publicIPAddresses/', variables('publicIPAddressName'))]",
+        "[concat('Microsoft.Network/virtualNetworks/', variables('vnetID'))]"
+      ],
+      "properties": {
+        "ipConfigurations": [
+          {
+            "name": "[variables('jumpBoxIPConfigName')]",
+            "properties": {
+              "privateIPAllocationMethod": "Dynamic",
+              "publicIPAddress": {
+                "id": "[resourceId('Microsoft.Network/publicIPAddresses',variables('publicIPAddressName'))]"
+              },
+              "subnet": {
+                "id": "[variables('subnetRef')]"
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "type": "Microsoft.Compute/virtualMachines",
+      "name": "[variables('jumpBoxName')]",
+      "location": "[resourceGroup().location]",
+      "apiVersion": "[variables('computeApiVersion')]",
+      "dependsOn": [
+        "[concat('Microsoft.Storage/storageAccounts/', variables('jumpBoxSAName'))]",
+        "[concat('Microsoft.Network/networkInterfaces/', variables('jumpBoxNicName'))]"
+      ],
+      "properties": {
+        "hardwareProfile": {
+          "vmSize": "[parameters('vmSku')]"
+        },
+        "osProfile": {
+          "computerName": "[variables('jumpBoxName')]",
+          "adminUsername": "[parameters('adminUsername')]",
+          "adminPassword": "[parameters('adminPassword')]"
+        },
+        "storageProfile": {
+          "imageReference": "[variables('imageReference')]",
+          "osDisk": {
+            "name": "[variables('jumpBoxOSDiskName')]",
+            "vhd": {
+              "uri": "[concat('http://',variables('jumpBoxSAName'),'.blob.core.chinacloudapi.cn/',variables('jumpBoxVHDContainerName'),'/',variables('jumpBoxOSDiskName'),'.vhd')]"
+            },
+            "caching": "ReadWrite",
+            "createOption": "FromImage"
+          }
+        },
+        "networkProfile": {
+          "networkInterfaces": [
+            {
+              "id": "[resourceId('Microsoft.Network/networkInterfaces',variables('jumpBoxNicName'))]"
+            }
+          ]
+        },
+        "diagnosticsProfile": {
+          "bootDiagnostics": {
+            "enabled": "true",
+            "storageUri": "[concat('http://',variables('jumpBoxSAName'),'.blob.core.chinacloudapi.cn')]"
+          }
+        }
       }
     },
     {
