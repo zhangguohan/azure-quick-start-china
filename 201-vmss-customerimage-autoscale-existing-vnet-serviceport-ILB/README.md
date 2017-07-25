@@ -4,6 +4,7 @@
 #### 需要指定某个已经存在的VNET及SubNet
 #### 可以设置一条SLB的端口映射规则
 #### 创建ILB
+#### 创建一个windows 2012 r2 虚拟机作为Jumpbox
 
 
 Linux 在操作系统内部执行
