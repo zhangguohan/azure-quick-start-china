@@ -212,6 +212,7 @@
         "tier": "Standard",
         "capacity": "[parameters('instanceCount')]"
       },
+      
       "properties": {
         "overprovision": "true",
         "upgradePolicy": {
@@ -301,6 +302,18 @@
       "dependsOn": [
         "[concat('Microsoft.Compute/virtualMachineScaleSets/', variables('namingInfix'))]"
       ],
+      "notifications": [
+      {
+        "operation": "Scale",
+        "email": {
+          "sendToSubscriptionAdministrator": false,
+          "sendToSubscriptionCoAdministrators": false,
+          "customEmails": [
+              "zhang.yiming@oe.21vianet.com"
+              ]
+        }
+      }
+    ],
       "properties": {
         "name": "[variables('wadnameInfix')]",
         "targetResourceUri": "[concat('/subscriptions/',subscription().subscriptionId, '/resourceGroups/',  resourceGroup().name, '/providers/Microsoft.Compute/virtualMachineScaleSets/', variables('namingInfix'))]",
