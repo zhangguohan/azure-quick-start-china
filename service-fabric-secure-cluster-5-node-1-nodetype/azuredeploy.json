@@ -510,7 +510,7 @@
                     "storageAccountEndPoint": "https://core.chinacloudapi.cn/"
                   },
                   "publisher": "Microsoft.Azure.Diagnostics",
-                  //"typeHandlerVersion": "1.7",
+                  "typeHandlerVersion": "1.5",
                   "settings": {
                     "WadCfg": {
                       "DiagnosticMonitorConfiguration": {
@@ -545,8 +545,7 @@
                             }
                           ]
                         },
-                          "PerformanceCounters":[
-                            {
+                          "PerformanceCounters":{
                               "scheduledTransferPeriod":"PT1M",
                               "PerformanceCounterConfiguration":[
                                 {
@@ -555,8 +554,7 @@
                                  "unit": "percent"
                                 }
                               ]
-                            } 
-                          ]
+                            }
                         }
                       },
                     "StorageAccount": "[variables('applicationDiagnosticsStorageAccountName')]"
