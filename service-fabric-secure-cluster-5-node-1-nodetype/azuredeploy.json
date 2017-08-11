@@ -510,7 +510,7 @@
                     "storageAccountEndPoint": "https://core.chinacloudapi.cn/"
                   },
                   "publisher": "Microsoft.Azure.Diagnostics",
-                  "typeHandlerVersion": "1.7",
+                  //"typeHandlerVersion": "1.7",
                   "settings": {
                     "WadCfg": {
                       "DiagnosticMonitorConfiguration": {
@@ -545,20 +545,20 @@
                             }
                           ]
                         },
-                        "PerformanceCounters":[
-                          {
-                            "scheduledTransferPeriod":"PT1M",
-                            "PerformanceCounterConfiguration":[
-                               {
+                          "PerformanceCounters":[
+                            {
+                              "scheduledTransferPeriod":"PT1M",
+                              "PerformanceCounterConfiguration":[
+                                {
                                  "counterSpecifier": "\\Processor(_Total)\\% Processor Time",
                                  "sampleRate": "PT1M",
                                  "unit": "percent"
                                 }
                               ]
                             } 
-                        ]
-                      }
-                    },
+                          ]
+                        }
+                      },
                     "StorageAccount": "[variables('applicationDiagnosticsStorageAccountName')]"
                   }
                 }
