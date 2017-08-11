@@ -549,10 +549,22 @@
                               }
                             }
                           ]
-                        }
+                        },
+                        "PerformanceCounters":[
+                          {
+                            "scheduledTransferPeriod":"PT1M",
+                            "PerformanceCounterConfiguration":[
+                               {
+                                 "counterSpecifier": "\\Processor(_Total)\\% Processor Time",
+                                 "sampleRate": "PT1M",
+                                 "unit": "percent"
+                                }
+                              ]
+                            } 
+                        ]
                       }
                     },
-                    "xmlCfg": "[base64(concat(variables('wadcfgxstart'),variables('wadmetricsresourceid'),variables('wadcfgxend')))]",
+                    //"xmlCfg": "[base64(concat(variables('wadcfgxstart'),variables('wadmetricsresourceid'),variables('wadcfgxend')))]",
                     "StorageAccount": "[variables('applicationDiagnosticsStorageAccountName')]"
                   },
                   "typeHandlerVersion": "1.5"
