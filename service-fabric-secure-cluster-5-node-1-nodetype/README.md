@@ -8,20 +8,16 @@ This template allows you to deploy a secure 5 node, Single Node Type Service fab
 
 # 如何生成证书并上传到Azure 密钥保管库
 
-	## 下载Github中提供的创建脚本：https://github.com/dafoyiming/Service-Fabric/blob/master/Scripts/ServiceFabricRPHelpers/ServiceFabricRPHelpers.psm1
+- 载Github中提供的创建脚本：
 
-	## 加载模块：
-           
-        PS C:\Users\zhangyiming> Import-Module "C:\Users\zhangyiming\Documents\GitHub\Service-Fabric\Scripts\ServiceFabricRPHelpers\ServiceFabricRPHelpers.psm1"
+  https://github.com/dafoyiming/Service-Fabric/blob/master/Scripts/ServiceFabricRPHelpers/ServiceFabricRPHelpers.psm1
 
-	## 导入本地证书.pfx(省略如何创建导出pfx)
+- 加载模块：
 
-           PS C:\Users\zhangyiming> Invoke-AddCertToKeyVault -SubscriptionId 4c1f7e7c-e47c-4688-8de0-19b1f8b58636 -ResourceGroupName zymvault -Location "china north" -VaultName zymvault -CertificateName zymcert -Password 123456 -UseExistingCertificate -ExistingPfxFilePath "C:\Windows\System32\zymcert.pfx" | Out-File -Encoding utf8 -FilePath 'C:\tmp\certinfo.txt'
-    
-    ## 记录下TXT中内容
+  PS C:\Users\zhangyiming> Import-Module "C:\Users\zhangyiming\Documents\GitHub\Service-Fabric\Scripts\ServiceFabricRPHelpers\ServiceFabricRPHelpers.psm1"
 
-    ## 填写参数
-    
+- 导入本地证书.pfx(省略如何创建导出pfx)
 
+   PS C:\Users\zhangyiming> Invoke-AddCertToKeyVault -SubscriptionId 4c1f7e7c-e47c-4688-8de0-19b1f8b58636 -ResourceGroupName zymvault -Location "china north" -VaultName zymvault -CertificateName zymcert -Password 123456 -UseExistingCertificate -ExistingPfxFilePath "C:\Windows\System32\zymcert.pfx" | Out-File -Encoding utf8 -FilePath 'C:\tmp\certinfo.txt'
 
-
+- 记录下TXT中内容
