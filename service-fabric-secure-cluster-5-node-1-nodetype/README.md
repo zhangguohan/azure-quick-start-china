@@ -6,28 +6,22 @@
 
 This template allows you to deploy a secure 5 node, Single Node Type Service fabric Cluster running Windows server 2012 R2 Data center on Standard_D2 Size VMs with Windows Azure diagnostics turned on. This template assumes that you already have certificates uploaded to your keyvault, else I strongly suggest you follow one of the two links below.
 
-## Creating a custom ARM template
+# 如何生成证书并上传到Azure 密钥保管库
 
-If you are wanting to create a custom ARM template for your cluster, then you have two choices.
+	## 下载Github中提供的创建脚本：https://github.com/dafoyiming/Service-Fabric/blob/master/Scripts/ServiceFabricRPHelpers/ServiceFabricRPHelpers.psm1
 
-1. You can acquire this sample template make changes to it. 
-2. Log into the azure portal and use the service fabric portal pages to generate the template for you to customize.
-  1. Log on to the Azure Portal [https://portal.azure.com](https://portal.azure.com).
-  2. Go through the process of creating the cluster as described in [Creating Service Fabric Cluster via portal](https://docs.microsoft.com/azure/service-fabric/service-fabric-cluster-creation-via-portal) , but do not click on ***create**, instead go to Summary and download the template and parameters.
+	## 加载模块：
+           
+        PS C:\Users\zhangyiming> Import-Module "C:\Users\zhangyiming\Documents\GitHub\Service-Fabric\Scripts\ServiceFabricRPHelpers\ServiceFabricRPHelpers.psm1"
 
+	## 导入本地证书.pfx(省略如何创建导出pfx)
 
- ![DownloadTemplate][DownloadTemplate]
+           PS C:\Users\zhangyiming> Invoke-AddCertToKeyVault -SubscriptionId 4c1f7e7c-e47c-4688-8de0-19b1f8b58636 -ResourceGroupName zymvault -Location "china north" -VaultName zymvault -CertificateName zymcert -Password 123456 -UseExistingCertificate -ExistingPfxFilePath "C:\Windows\System32\zymcert.pfx" | Out-File -Encoding utf8 -FilePath 'C:\tmp\certinfo.txt'
+    
+    ## 记录下TXT中内容
 
-
-Unzip the downloaded .zip on your local machine, make any changes to template or the parameter file as you need.
-
-
-## Deploying the ARM template to Azure using resource manager PS 
-
-Refer to [Deploying ARM templates using ARM PS ](https://azure.microsoft.com/documentation/articles/service-fabric-cluster-creation-via-arm/) for detailed guidance on how to. There is detailed guidance on how to set up your certificates as well. For a successful setup of a secure cluster, make sure to read that document thoroughly. 
-
-<!--Image references-->
-[DownloadTemplate]: ./DownloadTemplate.png
+    ## 填写参数
+    
 
 
 

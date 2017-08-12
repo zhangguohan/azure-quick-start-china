@@ -571,7 +571,7 @@
                                  "unit": "percent"
                                 }
                               ]
-                        }
+                          }
                       }
                     },
                     "StorageAccount": "[variables('applicationDiagnosticsStorageAccountName')]"
