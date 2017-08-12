@@ -545,18 +545,35 @@
                             }
                           ]
                         },
+                        	"Metrics": {
+                              "MetricAggregation": [
+                                {
+                                  "scheduledTransferPeriod": "PT1H"
+                                },
+                                {
+                                  "scheduledTransferPeriod": "PT1M"
+                                }
+                              ],
+                              "resourceId": "[concat('/subscriptions/',subscription().subscriptionId,'/resourceGroups/',resourceGroup().name ,'/providers/','Microsoft.Compute/virtualMachineScaleSets/',variables('vmNodeType0Name'))]"
+                        },
                           "PerformanceCounters":{
                               "scheduledTransferPeriod":"PT1M",
                               "PerformanceCounterConfiguration":[
                                 {
+                                  "annotation": [
+                                    {
+                                      "displayName": "CPU utilization",
+                                      "locale": "en-us"
+                                    }
+                                  ],
                                  "counterSpecifier": "\\Processor(_Total)\\% Processor Time",
                                  "sampleRate": "PT1M",
                                  "unit": "percent"
                                 }
                               ]
-                            }
                         }
-                      },
+                      }
+                    },
                     "StorageAccount": "[variables('applicationDiagnosticsStorageAccountName')]"
                   }
                 }
