@@ -1,6 +1,7 @@
 ### Autoscale a Linux VM Scale Set ###
 
 添加邮件提醒功能
+添加管理数据磁盘一块
 
 The Autoscale rules are configured as follows
 - sample for CPU (\\Processor\\PercentProcessorTime) in each VM every 1 Minute

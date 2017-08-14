@@ -40,6 +40,13 @@
       },
       "maxValue": 100
     },
+    "datadisksize": {
+      "type": "int",
+      "metadata": {
+        "description": "Size of one date disk"
+      },
+      "maxValue": 1024
+    },
     "adminUsername": {
       "type": "string",
       "metadata": {
@@ -238,7 +245,14 @@
               "caching": "ReadOnly",
               "createOption": "FromImage"
             },
-            "imageReference": "[variables('imageReference')]"
+            "imageReference": "[variables('imageReference')]",
+            "dataDisks": [
+			             {
+                     "lun": "1",
+                     "createOption": "empty",
+                     "diskSizeGB": "[parameters('datadisksize')]"
+                  }
+              ]
           },
           "osProfile": {
             "computerNamePrefix": "[variables('namingInfix')]",
