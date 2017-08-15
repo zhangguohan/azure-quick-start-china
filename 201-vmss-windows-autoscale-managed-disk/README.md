@@ -2,6 +2,7 @@
 
 The following template deploys a Windows VM Scale Set integrated with Azure autoscale 
 
+Attach a managed disk
 
 
 The template deploys a Windows VMSS with a desired count of VMs in the scale set. Once the VM Scale Sets is deployed, user can deploy an application inside each of the VMs (either by directly logging into the VMs or via a custom script extension)
