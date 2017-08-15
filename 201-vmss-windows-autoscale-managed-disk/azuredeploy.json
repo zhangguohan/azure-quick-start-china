@@ -215,7 +215,6 @@
                 "diskSizeGB": "[parameters('datadisksize')]"
                 }
               ]
-            } 
           },
           "osProfile": {
             "computerNamePrefix": "[variables('namingInfix')]",
