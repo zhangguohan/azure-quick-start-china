@@ -206,8 +206,8 @@
             "osDisk": {
               "caching": "ReadOnly",
               "createOption": "FromImage"
-            }
-          },
+            },
+          "imageReference": "[variables('imageReference')]",
           "dataDisks": [
 			        {
                 "lun": "1",
@@ -215,6 +215,7 @@
                 "diskSizeGB": "[parameters('datadisksize')]"
                 }
               ]
+            } 
           },
           "osProfile": {
             "computerNamePrefix": "[variables('namingInfix')]",
