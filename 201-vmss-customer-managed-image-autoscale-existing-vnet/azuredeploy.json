@@ -54,8 +54,7 @@
     "wadnameInfix": "[concat(variables('namingInfix'), 'autoscalewad')]",
     "longNamingInfix": "[toLower(parameters('vmssName'))]",
     "newStorageAccountSuffix": "[concat(variables('namingInfix'), 'sa')]",
-    "vhdContainerName": "[concat(variables('namingInfix'), 'vhd')]",
-    "osDiskName": "[concat(variables('namingInfix'), 'osdisk')]",
+    "osDiskName": "[concat(variables('longNamingInfix'), 'osdisk')]",
     "publicIPAddressName": "[concat(variables('namingInfix'), 'pip')]",
     "loadBalancerName": "[concat(variables('namingInfix'), 'lb')]",
     "publicIPAddressID": "[resourceId('Microsoft.Network/publicIPAddresses',variables('publicIPAddressName'))]",
@@ -79,7 +78,6 @@
     "wadcfgxend": "[concat('\"><MetricAggregation scheduledTransferPeriod=\"PT1H\"/><MetricAggregation scheduledTransferPeriod=\"PT1M\"/></Metrics></DiagnosticMonitorConfiguration></WadCfg>')]",
     "computeApiVersion": "2016-04-30-preview",
     "networkApiVersion": "2016-03-30",
-    //"storageApiVersion": "2016-04-30-preview",
     "insightsApiVersion": "2015-04-01"
   },
   "resources": [
