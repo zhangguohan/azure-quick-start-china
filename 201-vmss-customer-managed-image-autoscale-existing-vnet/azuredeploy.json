@@ -9,10 +9,10 @@
         "description": "Size of VMs in the VM Scale Set."
       }
     },
-    "sourceImageVhdUri": {
+    "sourceImageID": {
       "type": "string",
       "metadata": {
-        "description": "The source of the blob containing the custom image, must be in the same region of the deployment."
+        "description": "The source Image ID, must be in the same region of the deployment."
       }
     },
     "vmssName":{
@@ -79,7 +79,7 @@
     "wadcfgxend": "[concat('\"><MetricAggregation scheduledTransferPeriod=\"PT1H\"/><MetricAggregation scheduledTransferPeriod=\"PT1M\"/></Metrics></DiagnosticMonitorConfiguration></WadCfg>')]",
     "computeApiVersion": "2016-04-30-preview",
     "networkApiVersion": "2016-03-30",
-    "storageApiVersion": "2016-04-30-preview",
+    //"storageApiVersion": "2016-04-30-preview",
     "insightsApiVersion": "2015-04-01"
   },
   "resources": [
@@ -169,12 +169,10 @@
               "createOption": "FromImage",
               "managedDisk": {
                 "storageAccountType": "Premium_LRS"
-               }
-            },
-              "image": {
-                "uri": "[parameters('sourceImageVhdUri')]"
+                },
+              "imageReference": {
+                "uri": "[parameters('sourceImageID')]"
               }
-            }
           },
           "osProfile": {
             "computerNamePrefix": "[variables('namingInfix')]",
@@ -232,7 +230,9 @@
                 }
               }
             ]
+           }
           }
+         }
         }
       },
     {
