@@ -166,7 +166,9 @@
         "virtualMachineProfile": {
           "storageProfile": {
             "osDisk": {
+              "name": "[variables('osDiskName')]",
               "createOption": "FromImage",
+              "caching": "ReadOnly",
               "osType": "Linux",
               "managedDisk": {
                 "storageAccountType": "Premium_LRS"
