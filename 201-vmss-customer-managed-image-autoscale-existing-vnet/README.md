@@ -12,7 +12,7 @@ c:\windows\system32\sysprep\sysprep.etc
 2. Generalize
 3. Shutdown
 
-![Sysprep](assets/README-4401a.pngassets/README-4401a.png)
+![Sysprep](assets/README-4401a.png)
 
 - Linux 操作系统
 
@@ -58,11 +58,11 @@ sudo waagent-deprovision
 
 ## 在管理门户中捕获 ##
 
-![Capture](assets/README-e7b1a.pngassets/README-e7b1a.png)
+![Capture](assets/README-e7b1a.png)
 
-![ImageID](assets/README-d4ac7.pngassets/README-d4ac7.png)
+![ImageID](assets/README-d4ac7.png)
 
-![ImageID2](assets/README-32161.pngassets/README-32161.png)
+![ImageID2](assets/README-32161.png)
 
 The Autoscale rules are configured as follows
 - sample for CPU (\\Processor\\PercentProcessorTime) in each VM every 1 Minute
