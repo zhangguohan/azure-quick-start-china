@@ -1,6 +1,6 @@
-### Autoscale a VM Scale Set ###
+### Autoscale a VM Scale Set For Windows Customer Image with Managed Disks###
 
-Linux 在操作系统内部执行
+Windows 系统进行系统准备
 sudo waagent-deprovision
 
 Azure CLI 捕获镜像
