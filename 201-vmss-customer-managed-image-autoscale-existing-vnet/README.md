@@ -1,15 +1,16 @@
-### Autoscale a VM Scale Set For Windows Customer Image with Managed Disks###
+### Autoscale a VM Scale Set For Windows Customer Image with Managed Disks ###
 
 ## 操作系统准备 ##
 
 - Windows 操作系统
 
-打开目前执行 Sysprep.exe
+打开目前执行Sysprep.exe
+
 c:\windows\system32\sysprep\sysprep.etc
 
-1.Enter System Out-of-Box Experience (OOBE)
-2.Generalize
-3.Shutdown
+1. Enter System Out-of-Box Experience (OOBE)
+2. Generalize
+3. Shutdown
 
 - Linux 操作系统
 
@@ -18,30 +19,39 @@ sudo waagent-deprovision
 ## 捕获虚拟机镜像 ##
 
 - 定义变量
+
 $vmName = "myVM"
+
 $rgName = "myresourcegroup"
+
 $location = "chinanorth"
+
 $imageName = "myImage"
 
-
 - 保证虚拟机已经关机
+
 Stop-AzureRmVM -ResourceGroupName $rgName -Name $vmName -Force
 
 - 通用化虚拟机
+
 Set-AzureRmVm -ResourceGroupName $rgName -Name $vmName -Generalized
 
 - 声明VM变量
+
 $vm = Get-AzureRmVM -Name $vmName -ResourceGroupName $rgName
 
 $image = New-AzureRmImageConfig -Location $location -SourceVirtualMachineId $vm.ID
 
 - 创建镜像
+
 New-AzureRmImage -Image $image -ImageName $imageName -ResourceGroupName $rgName
 
 - 获得镜像ID
+
 (Get-AzureRmImage -ResourceGroupName $rgName -ImageName $imageName).Id
 
 • 镜像ID后续将添加到模板的参数中，形如:
+
 /subscriptions/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/resourceGroups/xxxxx/providers/Microsoft.Compute/images/xxxxx
 
 
