@@ -173,6 +173,7 @@
               "image": {
                 "uri": "[parameters('sourceImageID')]"
               }
+            }  
           },
           "osProfile": {
             "computerNamePrefix": "[variables('namingInfix')]",
@@ -207,7 +208,7 @@
                   ]
                 }
               }
-            ]
+            ] 
           },
           "extensionProfile": {
             "extensions": [
@@ -230,11 +231,10 @@
                 }
               }
             ]
-           }
           }
-         }
         }
-      },
+      }
+    },
     {
       "type": "Microsoft.Insights/autoscaleSettings",
       "apiVersion": "[variables('insightsApiVersion')]",
