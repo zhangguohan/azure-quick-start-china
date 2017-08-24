@@ -171,8 +171,8 @@
               "managedDisk": {
                 "storageAccountType": "Premium_LRS"
                 },
-              "image": {
-                "uri": "[parameters('sourceImageID')]"
+              "imageReference": {
+                "id": "[parameters('sourceImageID')]"
               }
             }  
           },
