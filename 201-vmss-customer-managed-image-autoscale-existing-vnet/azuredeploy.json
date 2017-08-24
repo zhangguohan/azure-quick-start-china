@@ -167,6 +167,7 @@
           "storageProfile": {
             "osDisk": {
               "createOption": "FromImage",
+              "osType": "Linux",
               "managedDisk": {
                 "storageAccountType": "Premium_LRS"
                 },
