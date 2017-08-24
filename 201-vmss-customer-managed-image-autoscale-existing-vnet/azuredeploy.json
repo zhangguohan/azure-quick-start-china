@@ -87,7 +87,7 @@
       "type": "Microsoft.Storage/storageAccounts",
       "name": "[variables('diagnosticsStorageAccountName')]",
       "location": "[resourceGroup().location]",
-      "apiVersion": "[variables('storageApiVersion')]",
+      "apiVersion": "2015-06-15",
       "properties": {
         "accountType": "[variables('storageAccountType')]"
       }
