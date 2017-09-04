@@ -86,15 +86,15 @@
     }
   },
   "variables": {
-    "storageAccountType": "Standard_LRS",
+
     "addressPrefix": "10.0.0.0/16",
     "subnetName": "Subnet-1",
     "subnetPrefix": "10.0.0.0/24",
     "publicIPAddressType": "Dynamic",
     "publicIPAddressId": "[resourceId('Microsoft.Network/publicIPAddresses', parameters('publicIPAddressName'))]",
     "vnetID": "[resourceId('Microsoft.Network/virtualNetworks',parameters('vnetName'))]",
-    "subnetRef": "[concat(variables('vnetID'),'/subnets/',variables ('subnetName'))]"
-   // "osDiskVhdName": "[concat('http://',parameters('userImageStorageAccountName'),'.blob.core.chinacloudapi.cn/vhds/',parameters('vmNamePrefix'),'osDisk.vhd')]"
+    "subnetRef": "[concat(variables('vnetID'),'/subnets/',variables ('subnetName'))]",
+    "osDiskVhdName": "[concat('http://',parameters('userImageStorageAccountName'),'.blob.core.chinacloudapi.cn/vhds/',parameters('vmNamePrefix'),copyIndex(),'.vhd')]"
   },
   "resources": [
     {
@@ -196,7 +196,7 @@
             "uri": "[parameters('osDiskVhdUri')]"
             },
           "vhd": {
-            "uri": "[concat('http://',parameters('userImageStorageAccountName'),'.blob.core.chinacloudapi.cn/vhds/','osdisk', copyIndex(), '.vhd')]"
+            "uri": "[variables('osDiskVhdName')]"
             }
           }
         },
@@ -206,12 +206,6 @@
               "id": "[resourceId('Microsoft.Network/networkInterfaces',concat(parameters('nicNamePrefix'),copyindex()))]"
             }
           ]
-        },
-        "diagnosticsProfile": {
-          "bootDiagnostics": {
-             "enabled": "true",
-             "storageUri": "[concat('http://',parameters('userImageStorageAccountName'),'.blob.core.chinacloudapi.cn')]"
-          }
         }
       }
     }
