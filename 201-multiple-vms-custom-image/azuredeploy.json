@@ -93,8 +93,7 @@
     "publicIPAddressType": "Dynamic",
     "publicIPAddressId": "[resourceId('Microsoft.Network/publicIPAddresses', parameters('publicIPAddressName'))]",
     "vnetID": "[resourceId('Microsoft.Network/virtualNetworks',parameters('vnetName'))]",
-    "subnetRef": "[concat(variables('vnetID'),'/subnets/',variables ('subnetName'))]",
-    "osDiskVhdName": "[concat('http://',parameters('userImageStorageAccountName'),'.blob.core.chinacloudapi.cn/vhds/',parameters('vmNamePrefix'),copyIndex(),'.vhd')]"
+    "subnetRef": "[concat(variables('vnetID'),'/subnets/',variables ('subnetName'))]"
   },
   "resources": [
     {
@@ -196,7 +195,7 @@
             "uri": "[parameters('osDiskVhdUri')]"
             },
           "vhd": {
-            "uri": "[variables('osDiskVhdName')]"
+            "uri":  "[concat('http://',parameters('userImageStorageAccountName'),'.blob.core.chinacloudapi.cn/vhds/',parameters('vmNamePrefix'),copyIndex(),'.vhd')]"
             }
           }
         },
