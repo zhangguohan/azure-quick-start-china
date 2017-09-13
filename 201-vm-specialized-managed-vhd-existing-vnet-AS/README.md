@@ -12,3 +12,5 @@
 - 指定一个可用性集，该可用性集下的其他虚拟机必须也在之前的已经存在的虚拟网络中
 - 同时创建一个用于诊断的存储账号
 - 为PIP指定DNS名称
+
+托管磁盘ID 为磁盘的resourceid 形如：/subscriptions/4c1f7e7c-e47c-4688-8de0-19b1f8b58636/resourceGroups/zymmanaged/providers/Microsoft.Compute/disks/zymmanaged_OsDisk_1_fec96d98af8a401d96918ae7745d713c
