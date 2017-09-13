@@ -151,7 +151,6 @@
           "osDisk": {
             "osType": "[parameters('osType')]",
             "caching": "ReadWrite",
-            "createOption": "Attach",
             "managedDisk": {
               "id": "[parameters('managedosDiskVhdID')]"
               }
