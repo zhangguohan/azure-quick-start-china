@@ -201,7 +201,6 @@
             "version": "latest"
           },
           "osDisk": {
-            "name": "osdisk",
             "managedDisk":{"storageAccountType": "Standard_LRS"},
             "caching": "ReadWrite",
             "createOption": "FromImage"
