@@ -3,4 +3,4 @@
     <img src="http://azuredeploy.net/deploybutton.png"/>
 </a>
 
-This template allows you to create multiple Virtual Machines with custom image of managed disk
+This template allows you to create less than 10 Virtual Machines with custom image of managed disk

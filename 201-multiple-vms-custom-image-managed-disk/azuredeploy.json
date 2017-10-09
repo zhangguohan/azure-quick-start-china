@@ -48,12 +48,6 @@
         "description": "VNET name"
       }
     },
-    "userImageStorageAccountName": {
-      "type": "string",
-      "metadata": {
-        "description": "This is the name of the your storage account"
-      }
-    },
     "sourceImageID": {
       "type": "string",
       "metadata": {
