@@ -190,17 +190,16 @@
         },
         "storageProfile": {
           "osDisk": {
-          "name": "osDisk",
-          "osType": "[parameters('osType')]",
-          "caching": "ReadWrite",
-          "createOption": "FromImage",
-          "managedDisk": {
-            "storageAccountType": "Standard_LRS"
-            }
-          },
-          "imageReference": {
-            "id": "[parameters('sourceImageID')]"
+            "osType": "[parameters('osType')]",
+            "caching": "ReadWrite",
+            "createOption": "FromImage",
+            "managedDisk": {
+              "storageAccountType": "Standard_LRS"
+            },
+            "imageReference": {
+              "id": "[parameters('sourceImageID')]"
            }
+          }
          },
         "networkProfile": {
           "networkInterfaces": [

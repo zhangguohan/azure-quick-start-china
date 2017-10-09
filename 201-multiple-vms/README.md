@@ -6,4 +6,4 @@
     <img src="http://armviz.io/visualizebutton.png"/>
 </a>
 
-This template allows you to create * Virtual Machines
+This template allows you to create less than 10 Virtual Machines
