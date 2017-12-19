@@ -8,7 +8,7 @@ Note that this template does not install an application on the VM Scale Set VMs,
 
 This template supports VM scale sets of up to 1,000 VMs, and uses Azure Managed Disks.
 
-@Yiming.zhang Enable autoscale depand on "Porcessor Time". Greater than 70% will triger one instants up and Less than 30% will triger one instants down
+Yiming.zhang： Enable autoscale depand on "Porcessor Time". Greater than 70% will triger one instant up and Less than 30% will triger one instant down
 
 <a href="https://portal.azure.cn/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fdafoyiming%2Fazure-quick-start-china%2Fmeat%2F201-vmss-windows-app-gateway-autoscale%2Fazuredeploy.json" target="_blank">
     <img src="http://azuredeploy.net/deploybutton.png"/>
