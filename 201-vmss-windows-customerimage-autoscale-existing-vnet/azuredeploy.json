@@ -275,7 +275,7 @@
             "capacity": {
               "minimum": "4",
               "maximum": "60",
-              "default": "1"
+              "default": "4"
             },
             "rules": [
               {
